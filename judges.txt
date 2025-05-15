@@ -1,0 +1,12 @@
+AdminDashboard Requirements
+.....should have a navbar written E-DRAMA &MUSIC
+.....should have a sidebar with three buttonsAddcompetitions,create judges and statistics 
+when a user clicks the add competition button a form is generated on the side that has input fields like the competition name,venue,date.The form should have a submit button at the bottom that the user can click after filling the input fields on the form that emerge after clicking the Add competition button
+
+
+creating judges
+judge first and last name 
+email address
+
+Next step
+
