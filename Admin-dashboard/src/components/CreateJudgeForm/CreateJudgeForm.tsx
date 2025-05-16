@@ -6,6 +6,7 @@ interface Judge {
   lastName: string;
   email: string;
   idNumber: string;
+  password: string;
 }
 
 interface Props {
@@ -18,6 +19,7 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
     lastName: "",
     email: "",
     idNumber: "",
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +38,7 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
       lastName: "",
       email: "",
       idNumber: "",
+      password: "",
     });
   };
 
@@ -44,7 +47,7 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
       <h2>Create Judge</h2>
 
       <label>
-        First Name:
+        First Name
         <input
           type="text"
           name="firstName"
@@ -55,7 +58,7 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
       </label>
 
       <label>
-        Last Name:
+        Last Name
         <input
           type="text"
           name="lastName"
@@ -66,7 +69,7 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
       </label>
 
       <label>
-        Email Address:
+        Email Address
         <input
           type="email"
           name="email"
@@ -77,11 +80,21 @@ const CreateJudgeForm: React.FC<Props> = ({ onSubmitJudge }) => {
       </label>
 
       <label>
-        ID Number:
+        ID Number
         <input
           type="text"
           name="idNumber"
           value={form.idNumber}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Password:
+        <input
+          type="password"
+          name="password"
+          value={form.password}
           onChange={handleChange}
           required
         />

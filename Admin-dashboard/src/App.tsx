@@ -20,6 +20,7 @@ interface Judge {
   lastName: string;
   email: string;
   idNumber: string;
+  password: string;
 }
 
 const App = () => {
@@ -52,7 +53,12 @@ const App = () => {
             <ViewCompetitions competitions={competitions} />
           )}
           {selected === "viewJudges" && <ViewJudges judges={judges} />}
-          {selected === "stats" && <p>Statistics coming soon...</p>}
+          {selected === "stats" && (
+            <p>
+              Statistics of how the competitions are going willbe updated here
+              once the admin creates competitions and judges award marks{" "}
+            </p>
+          )}
         </div>
       </div>
 

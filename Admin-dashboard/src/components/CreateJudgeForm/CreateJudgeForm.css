@@ -1,51 +1,3 @@
-/* .judge-form {
-  background-color: #f9f9f9;
-  padding: 2rem;
-  margin: 2rem auto;
-  border-radius: 8px;
-  max-width: 500px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
-
-.judge-form h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #333;
-}
-
-.judge-form label {
-  display: block;
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-.judge-form input {
-  width: 100%;
-  padding: 0.6rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.judge-form button {
-  margin-top: 1rem;
-  width: 100%;
-  padding: 0.7rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.judge-form button:hover {
-  background-color: #0056b3;
-}
-
- */
 
  .judge-form {
   background-color: #ffffff;
@@ -67,7 +19,7 @@
 }
 
 .judge-form input {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 4px;
   margin-bottom: 16px;
