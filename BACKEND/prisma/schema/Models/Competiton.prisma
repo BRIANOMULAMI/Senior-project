@@ -1,0 +1,9 @@
+model Competition {
+    id                String         @id @default(cuid())
+    name              String
+    schedule          DateTime
+    description       String
+    totalParticipants Int            @default(0) @map("total_participants")
+    judges            Judges[]       @relation("CompetitionJudges")
+    participants      Participants[] // one competition can have many participant entries
+}

@@ -1,0 +1,74 @@
+enum userRoles {
+  ADMIN
+  JUDGE
+  SCHOOL
+}
+
+model Participants {
+  id            String @id @default(cuid())
+  schoolId      String @unique
+  competitionId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  school      School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  competition Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+
+  @@map("participants")
+}
+
+model Competition {
+  id                String         @id @default(cuid())
+  name              String
+  schedule          DateTime
+  description       String
+  totalParticipants Int            @default(0) @map("total_participants")
+  judges            Judges[]       @relation("CompetitionJudges")
+  participants      Participants[] // one competition can have many participant entries
+}
+
+model Judges {
+  id         String @id @default(cuid())
+  nationalId String @unique
+
+  userId       String        @unique
+  user         Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  competitions Competition[] @relation("CompetitionJudges")
+
+  @@map("judges")
+}
+
+model School {
+  id          String        @id @default(cuid())
+  county      String
+  userId      String        @unique
+  user        Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  participant Participants?
+
+  @@map("school")
+}
+
+model Users {
+  id       String    @id @default(cuid())
+  name     String
+  email    String    @unique
+  password String
+  role     userRoles @default(SCHOOL)
+
+  school    School?
+  judge     Judges?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([createdAt, id], name: "judges_pagination")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}

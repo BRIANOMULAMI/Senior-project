@@ -1,0 +1,9 @@
+model School {
+    id          String        @id @default(cuid())
+    county      String
+    userId      String        @unique
+    user        Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    participant Participants?
+
+    @@map("school")
+}

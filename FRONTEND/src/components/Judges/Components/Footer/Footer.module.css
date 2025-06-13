@@ -1,0 +1,21 @@
+footer {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #1c1c1c;
+  color: white;
+  text-align: center;
+  justify-items: auto;
+}
+a {
+  margin: 0 10px;
+  color: white;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  gap: 20px;
+  cursor: pointer;
+
+}
+
+a:hover {
+  color: #2335cf;
+} 

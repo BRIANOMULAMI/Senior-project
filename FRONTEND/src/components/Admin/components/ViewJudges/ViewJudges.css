@@ -1,0 +1,19 @@
+.view-judges {
+  padding: 20px;
+}
+
+.view-judges h2 {
+  margin-bottom: 15px;
+}
+
+.view-judges ul {
+  list-style: none;
+  padding: 0;
+}
+
+.view-judges li {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
