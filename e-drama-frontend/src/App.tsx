@@ -1,12 +1,9 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/ AuthContext';
 
-
-import Navbar from './components/navbar';
 import ProtectedRoute from './components/ProtectedRoute';
-import Footer from './components/footer';
 
 import HomePage from './pages/ HomePage';
 import LoginPage from './pages/LoginPage';
@@ -19,54 +16,101 @@ import AdminDashboard from './pages/dashboards/AdminDashboard';
 import SchoolDashboard from './pages/dashboards/SchoolDashboard';
 import JudgeDashboard from './pages/dashboards/JudgeDashboard';
 
+import PublicLayout from './layouts/PublicLayout';
+import DashboardLayout from './layouts/DashboardLayout';
+
 function App() {
   return (
-    
     <AuthProvider>
       <Router>
-    
-        <Navbar />
-        
-        <main className="font-sans antialiased text-gray-900">
-          <Routes>
-            {/* Public Pages - accessible by anyone */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Routes>
+          {/* Public Pages */}
+          <Route
+            path="/"
+            element={
+              <PublicLayout>
+                <HomePage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicLayout>
+                <LoginPage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <PublicLayout>
+                <SignupPage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicLayout>
+                <ForgotPasswordPage />
+              </PublicLayout>
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <PublicLayout>
+                <ResetPasswordPage />
+              </PublicLayout>
+            }
+          />
 
-            {/* Protected Dashboards - accessible only by authenticated users with specific roles */}
-            <Route path="/admin-dashboard" element={
+          {/* Dashboards */}
+          <Route
+            path="/admin-dashboard"
+            element={
               <ProtectedRoute allowedRoles={['admin']}>
-                <AdminDashboard />
+                <DashboardLayout>
+                  <AdminDashboard />
+                </DashboardLayout>
               </ProtectedRoute>
-            } />
-            <Route path="/school-dashboard" element={
+            }
+          />
+          <Route
+            path="/school-dashboard"
+            element={
               <ProtectedRoute allowedRoles={['school']}>
-                <SchoolDashboard />
+                <DashboardLayout>
+                  <SchoolDashboard />
+                </DashboardLayout>
               </ProtectedRoute>
-            } />
-            <Route path="/judge-dashboard" element={
+            }
+          />
+          <Route
+            path="/judge-dashboard"
+            element={
               <ProtectedRoute allowedRoles={['judge']}>
-                <JudgeDashboard />
+                <DashboardLayout>
+                  <JudgeDashboard />
+                </DashboardLayout>
               </ProtectedRoute>
-            } />
+            }
+          />
 
-            {/*  displays the NotFoundPage */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-
-        <Footer />
+          {/* 404 Page */}
+          <Route
+            path="*"
+            element={
+              <PublicLayout>
+                <NotFoundPage />
+              </PublicLayout>
+            }
+          />
+        </Routes>
       </Router>
     </AuthProvider>
   );
 }
 
 export default App;
-
-
-
-
-
