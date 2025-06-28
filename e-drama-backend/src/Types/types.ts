@@ -8,10 +8,12 @@ export interface UserType {
 
 export interface CreateCompetitonsPayload {
   name: string;
-  venue: string;
-  schedule: string;
+  location: string;
+  time: Date;
   description: string;
   judgeId: string[];
+  status: "UPCOMING" | "ACTIVE" | "COMPLETED";
+  maxSchools: string;
 }
 
 export interface JudgeType {

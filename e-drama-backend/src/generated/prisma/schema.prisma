@@ -6,7 +6,7 @@ enum userRoles {
 
 model Participants {
   id            String @id @default(cuid())
-  schoolId      String @unique
+  schoolId      String
   competitionId String
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -18,13 +18,22 @@ model Participants {
 }
 
 model Competition {
-  id                String         @id @default(cuid())
+  id                String             @id @default(cuid())
   name              String
   schedule          DateTime
   description       String
-  totalParticipants Int            @default(0) @map("total_participants")
-  judges            Judges[]       @relation("CompetitionJudges")
-  participants      Participants[] // one competition can have many participant entries
+  venue             String
+  maxParticipants   Int                @default(0) @map("max_participants")
+  status            COMPETITION_STATUS @default(UPCOMING)
+  totalParticipants Int                @default(0) @map("total_participants")
+  judges            Judges[]           @relation("CompetitionJudges")
+  participants      Participants[]
+}
+
+enum COMPETITION_STATUS {
+  UPCOMING
+  ACTIVE
+  COMPLETED
 }
 
 model Judges {
@@ -39,26 +48,25 @@ model Judges {
 }
 
 model School {
-  id          String        @id @default(cuid())
+  id          String         @id @default(cuid())
   county      String
-  userId      String        @unique
-  user        Users         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  participant Participants?
+  userId      String         @unique
+  user        Users          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  participant Participants[]
 
   @@map("school")
 }
 
 model Users {
-  id       String    @id @default(cuid())
-  name     String
-  email    String    @unique
-  password String
-  role     userRoles @default(SCHOOL)
-
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      userRoles @default(SCHOOL)
   school    School?
   judge     Judges?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
 
   @@index([createdAt, id], name: "judges_pagination")
 }

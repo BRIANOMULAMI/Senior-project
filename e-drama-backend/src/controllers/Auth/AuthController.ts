@@ -106,13 +106,13 @@ const AuthUserLogin = async (req: Request, res: Response) => {
       { userId: user.id, userRole: user.role },
       process.env.JWT_SECRET!,
       {
-        expiresIn: "1h",
+        expiresIn: "1d",
       }
     );
     res.cookie("Bearer", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 1000 * 60 * 60 * 1,
+      maxAge: 1000 * 60 * 60 * 24,
     });
     res.status(200).json({ message: "Login successful" });
     return;
@@ -123,7 +123,6 @@ const AuthUserLogin = async (req: Request, res: Response) => {
     return;
   }
 };
-
 const AuthUserLogout = (req: Request, res: Response) => {
   res.clearCookie("Bearer", {
     httpOnly: true,

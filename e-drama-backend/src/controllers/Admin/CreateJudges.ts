@@ -18,18 +18,23 @@ const AdminCreateJudge = async (req: Request, res: Response) => {
   }
 
   try {
-    const existingUser = await db.users.findUnique({
+    const existingUser = await db.users.findFirst({
       where: { email },
     });
-
-    if (existingUser && existingUser.role === "JUDGE") {
+    if (existingUser) {
+      if (existingUser && existingUser.role === "JUDGE") {
+        res
+          .status(400)
+          .json({ message: "A judge with this email already exists" });
+        return;
+      }
       res
         .status(400)
-        .json({ message: "A judge with this email already exists" });
+        .json({ message: "A user with this email already exists" });
       return;
     }
 
-    const existingNationalId = await db.judges.findUnique({
+    const existingNationalId = await db.judges.findFirst({
       where: { nationalId },
     });
 
@@ -76,9 +81,6 @@ const AdminCreateJudge = async (req: Request, res: Response) => {
 };
 
 const AdminGetAllJudges = async (req: Request, res: Response) => {
-  const { cursor } = req.query as { cursor?: string };
-  const PAGE_SIZE = 5;
-
   try {
     const allJudges = await db.users.findMany({
       where: {
@@ -95,23 +97,18 @@ const AdminGetAllJudges = async (req: Request, res: Response) => {
           select: {
             nationalId: true,
             id: true,
+            _count: {
+              select: {
+                competitions: true,
+              },
+            },
           },
         },
       },
       orderBy: [{ createdAt: "desc" }],
-      take: PAGE_SIZE + 1,
-      cursor: cursor ? { id: cursor } : undefined,
     });
 
-    const newNextCursor =
-      allJudges.length > PAGE_SIZE ? allJudges[PAGE_SIZE].id : undefined;
-
-    const judges = allJudges.slice(0, PAGE_SIZE);
-
-    res.status(200).json({
-      judges,
-      nextCursor: newNextCursor,
-    });
+    res.status(200).json(allJudges);
   } catch (error) {
     console.error({ error });
     res.status(500).json({ message: "Internal Server Error" });
@@ -149,66 +146,92 @@ const AdminDeleteJudge = async (req: Request, res: Response) => {
   }
 };
 
-const AdminUpdateJudge = async (req: Request, res: Response) => {
-  const { name, email, nationalId, password } = req.body as {
-    name?: string;
-    email?: string;
-    nationalId?: string;
-    password?: string;
-  };
-  const { id } = req.params as { id: string };
+interface EditJudgeDetailsBody {
+  email: string;
+  password: string;
+  name: string;
+  nationalId: string;
+}
 
-  if (!name && !email && !password && !nationalId) {
-    res.status(400).json({ message: "Please provide at least one field" });
+const AdminUpdateJudge = async (req: Request, res: Response) => {
+  const { email, password, name, nationalId } =
+    req.body as Partial<EditJudgeDetailsBody>;
+
+  if (!email && !password && !name && !nationalId) {
+    res.status(400).json({ message: "At least one field is required" });
     return;
   }
 
   try {
     const existingJudge = await db.users.findFirst({
-      where: {
-        id,
-        role: "JUDGE",
-      },
-      select: {
-        id: true,
-        judge: {
-          select: {
-            id: true,
-          },
-        },
-      },
+      where: { email },
+      include: { judge: true },
     });
 
-    if (!existingJudge || !existingJudge.judge) {
-      res.status(400).json({ message: "Judge not found" });
+    if (!existingJudge) {
+      res.status(404).json({ message: "Judge not found" });
       return;
     }
 
-    const UserUpdateData: any = {};
-    const JudgeUpdateData: any = {};
-
-    if (name) UserUpdateData.name = name;
-    if (email) UserUpdateData.email = email;
-    if (password) {
-      const pwdHash = await hash(password, 10);
-      UserUpdateData.password = pwdHash;
+    if (existingJudge.role !== "JUDGE") {
+      res.status(400).json({ message: "Unauthorized" });
+      return;
     }
-    if (nationalId) JudgeUpdateData.nationalId = nationalId;
+
+    if (nationalId && nationalId !== existingJudge.judge?.nationalId) {
+      const nationalIdConflict = await db.judges.findFirst({
+        where: { nationalId },
+      });
+      if (nationalIdConflict) {
+        res.status(400).json({ message: "National ID already exists" });
+        return;
+      }
+    }
+
+    if (email && email !== existingJudge.email) {
+      const emailConflict = await db.users.findFirst({
+        where: { email },
+      });
+      if (emailConflict) {
+        res.status(400).json({ message: "Email already exists" });
+        return;
+      }
+    }
+
+    const data: Partial<EditJudgeDetailsBody> = {};
+
+    if (email) data.email = email;
+    if (name) data.name = name;
+    if (nationalId) data.nationalId = nationalId;
+    if (password) {
+      const hashed = await hash(password, 10);
+      data.password = hashed;
+    }
 
     await db.users.update({
-      data: UserUpdateData,
       where: { id: existingJudge.id },
+      data: {
+        email: data.email,
+        name: data.name,
+        password: data.password,
+      },
     });
 
-    await db.judges.update({
-      where: { id: existingJudge.judge.id },
-      data: JudgeUpdateData,
-    });
+    if (data.nationalId) {
+      await db.judges.update({
+        where: { userId: existingJudge.id },
+        data: {
+          nationalId: data.nationalId,
+        },
+      });
+    }
 
-    res.status(200).json({ message: "Judge updated successfully" });
+    res.status(200).json({ message: "Judge details updated successfully" });
+    return;
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.log({ error });
+    res.status(500).json({ message: "Internal server error" });
+    return;
   }
 };
 

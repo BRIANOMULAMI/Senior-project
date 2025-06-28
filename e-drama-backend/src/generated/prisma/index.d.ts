@@ -29,6 +29,11 @@ export type Competition = $Result.DefaultSelection<Prisma.$CompetitionPayload>
  */
 export type Judges = $Result.DefaultSelection<Prisma.$JudgesPayload>
 /**
+ * Model Marks
+ * 
+ */
+export type Marks = $Result.DefaultSelection<Prisma.$MarksPayload>
+/**
  * Model School
  * 
  */
@@ -38,6 +43,11 @@ export type School = $Result.DefaultSelection<Prisma.$SchoolPayload>
  * 
  */
 export type Users = $Result.DefaultSelection<Prisma.$UsersPayload>
+/**
+ * Model Verifications
+ * 
+ */
+export type Verifications = $Result.DefaultSelection<Prisma.$VerificationsPayload>
 
 /**
  * Enums
@@ -51,11 +61,37 @@ export namespace $Enums {
 
 export type userRoles = (typeof userRoles)[keyof typeof userRoles]
 
+
+export const APPLICATION_STATUS: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED'
+};
+
+export type APPLICATION_STATUS = (typeof APPLICATION_STATUS)[keyof typeof APPLICATION_STATUS]
+
+
+export const COMPETITION_STATUS: {
+  UPCOMING: 'UPCOMING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED'
+};
+
+export type COMPETITION_STATUS = (typeof COMPETITION_STATUS)[keyof typeof COMPETITION_STATUS]
+
 }
 
 export type userRoles = $Enums.userRoles
 
 export const userRoles: typeof $Enums.userRoles
+
+export type APPLICATION_STATUS = $Enums.APPLICATION_STATUS
+
+export const APPLICATION_STATUS: typeof $Enums.APPLICATION_STATUS
+
+export type COMPETITION_STATUS = $Enums.COMPETITION_STATUS
+
+export const COMPETITION_STATUS: typeof $Enums.COMPETITION_STATUS
 
 /**
  * ##  Prisma Client ʲˢ
@@ -213,6 +249,16 @@ export class PrismaClient<
   get judges(): Prisma.JudgesDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.marks`: Exposes CRUD operations for the **Marks** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Marks
+    * const marks = await prisma.marks.findMany()
+    * ```
+    */
+  get marks(): Prisma.MarksDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.school`: Exposes CRUD operations for the **School** model.
     * Example usage:
     * ```ts
@@ -231,6 +277,16 @@ export class PrismaClient<
     * ```
     */
   get users(): Prisma.UsersDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.verifications`: Exposes CRUD operations for the **Verifications** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Verifications
+    * const verifications = await prisma.verifications.findMany()
+    * ```
+    */
+  get verifications(): Prisma.VerificationsDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -674,8 +730,10 @@ export namespace Prisma {
     Participants: 'Participants',
     Competition: 'Competition',
     Judges: 'Judges',
+    Marks: 'Marks',
     School: 'School',
-    Users: 'Users'
+    Users: 'Users',
+    Verifications: 'Verifications'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -694,7 +752,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "participants" | "competition" | "judges" | "school" | "users"
+      modelProps: "participants" | "competition" | "judges" | "marks" | "school" | "users" | "verifications"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -920,6 +978,80 @@ export namespace Prisma {
           }
         }
       }
+      Marks: {
+        payload: Prisma.$MarksPayload<ExtArgs>
+        fields: Prisma.MarksFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MarksFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MarksFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          findFirst: {
+            args: Prisma.MarksFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MarksFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          findMany: {
+            args: Prisma.MarksFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>[]
+          }
+          create: {
+            args: Prisma.MarksCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          createMany: {
+            args: Prisma.MarksCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MarksCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>[]
+          }
+          delete: {
+            args: Prisma.MarksDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          update: {
+            args: Prisma.MarksUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          deleteMany: {
+            args: Prisma.MarksDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MarksUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MarksUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>[]
+          }
+          upsert: {
+            args: Prisma.MarksUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarksPayload>
+          }
+          aggregate: {
+            args: Prisma.MarksAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMarks>
+          }
+          groupBy: {
+            args: Prisma.MarksGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MarksGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MarksCountArgs<ExtArgs>
+            result: $Utils.Optional<MarksCountAggregateOutputType> | number
+          }
+        }
+      }
       School: {
         payload: Prisma.$SchoolPayload<ExtArgs>
         fields: Prisma.SchoolFieldRefs
@@ -1068,6 +1200,80 @@ export namespace Prisma {
           }
         }
       }
+      Verifications: {
+        payload: Prisma.$VerificationsPayload<ExtArgs>
+        fields: Prisma.VerificationsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VerificationsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VerificationsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          findFirst: {
+            args: Prisma.VerificationsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VerificationsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          findMany: {
+            args: Prisma.VerificationsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>[]
+          }
+          create: {
+            args: Prisma.VerificationsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          createMany: {
+            args: Prisma.VerificationsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.VerificationsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>[]
+          }
+          delete: {
+            args: Prisma.VerificationsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          update: {
+            args: Prisma.VerificationsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          deleteMany: {
+            args: Prisma.VerificationsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VerificationsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.VerificationsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>[]
+          }
+          upsert: {
+            args: Prisma.VerificationsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VerificationsPayload>
+          }
+          aggregate: {
+            args: Prisma.VerificationsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVerifications>
+          }
+          groupBy: {
+            args: Prisma.VerificationsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VerificationsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VerificationsCountArgs<ExtArgs>
+            result: $Utils.Optional<VerificationsCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1155,8 +1361,10 @@ export namespace Prisma {
     participants?: ParticipantsOmit
     competition?: CompetitionOmit
     judges?: JudgesOmit
+    marks?: MarksOmit
     school?: SchoolOmit
     users?: UsersOmit
+    verifications?: VerificationsOmit
   }
 
   /* Types for Logging */
@@ -1247,6 +1455,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ParticipantsCountOutputType
+   */
+
+  export type ParticipantsCountOutputType = {
+    marks: number
+  }
+
+  export type ParticipantsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    marks?: boolean | ParticipantsCountOutputTypeCountMarksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ParticipantsCountOutputType without action
+   */
+  export type ParticipantsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParticipantsCountOutputType
+     */
+    select?: ParticipantsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ParticipantsCountOutputType without action
+   */
+  export type ParticipantsCountOutputTypeCountMarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarksWhereInput
+  }
+
+
+  /**
    * Count Type CompetitionCountOutputType
    */
 
@@ -1292,10 +1531,12 @@ export namespace Prisma {
 
   export type JudgesCountOutputType = {
     competitions: number
+    marks: number
   }
 
   export type JudgesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     competitions?: boolean | JudgesCountOutputTypeCountCompetitionsArgs
+    marks?: boolean | JudgesCountOutputTypeCountMarksArgs
   }
 
   // Custom InputTypes
@@ -1314,6 +1555,44 @@ export namespace Prisma {
    */
   export type JudgesCountOutputTypeCountCompetitionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CompetitionWhereInput
+  }
+
+  /**
+   * JudgesCountOutputType without action
+   */
+  export type JudgesCountOutputTypeCountMarksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarksWhereInput
+  }
+
+
+  /**
+   * Count Type SchoolCountOutputType
+   */
+
+  export type SchoolCountOutputType = {
+    participant: number
+  }
+
+  export type SchoolCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participant?: boolean | SchoolCountOutputTypeCountParticipantArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SchoolCountOutputType without action
+   */
+  export type SchoolCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SchoolCountOutputType
+     */
+    select?: SchoolCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SchoolCountOutputType without action
+   */
+  export type SchoolCountOutputTypeCountParticipantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParticipantsWhereInput
   }
 
 
@@ -1335,6 +1614,7 @@ export namespace Prisma {
     id: string | null
     schoolId: string | null
     competitionId: string | null
+    status: $Enums.APPLICATION_STATUS | null
     createdAt: Date | null
   }
 
@@ -1342,6 +1622,7 @@ export namespace Prisma {
     id: string | null
     schoolId: string | null
     competitionId: string | null
+    status: $Enums.APPLICATION_STATUS | null
     createdAt: Date | null
   }
 
@@ -1349,6 +1630,7 @@ export namespace Prisma {
     id: number
     schoolId: number
     competitionId: number
+    status: number
     createdAt: number
     _all: number
   }
@@ -1358,6 +1640,7 @@ export namespace Prisma {
     id?: true
     schoolId?: true
     competitionId?: true
+    status?: true
     createdAt?: true
   }
 
@@ -1365,6 +1648,7 @@ export namespace Prisma {
     id?: true
     schoolId?: true
     competitionId?: true
+    status?: true
     createdAt?: true
   }
 
@@ -1372,6 +1656,7 @@ export namespace Prisma {
     id?: true
     schoolId?: true
     competitionId?: true
+    status?: true
     createdAt?: true
     _all?: true
   }
@@ -1452,6 +1737,7 @@ export namespace Prisma {
     id: string
     schoolId: string
     competitionId: string
+    status: $Enums.APPLICATION_STATUS
     createdAt: Date
     _count: ParticipantsCountAggregateOutputType | null
     _min: ParticipantsMinAggregateOutputType | null
@@ -1476,15 +1762,19 @@ export namespace Prisma {
     id?: boolean
     schoolId?: boolean
     competitionId?: boolean
+    status?: boolean
     createdAt?: boolean
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     competition?: boolean | CompetitionDefaultArgs<ExtArgs>
+    marks?: boolean | Participants$marksArgs<ExtArgs>
+    _count?: boolean | ParticipantsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["participants"]>
 
   export type ParticipantsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     schoolId?: boolean
     competitionId?: boolean
+    status?: boolean
     createdAt?: boolean
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     competition?: boolean | CompetitionDefaultArgs<ExtArgs>
@@ -1494,6 +1784,7 @@ export namespace Prisma {
     id?: boolean
     schoolId?: boolean
     competitionId?: boolean
+    status?: boolean
     createdAt?: boolean
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     competition?: boolean | CompetitionDefaultArgs<ExtArgs>
@@ -1503,13 +1794,16 @@ export namespace Prisma {
     id?: boolean
     schoolId?: boolean
     competitionId?: boolean
+    status?: boolean
     createdAt?: boolean
   }
 
-  export type ParticipantsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "schoolId" | "competitionId" | "createdAt", ExtArgs["result"]["participants"]>
+  export type ParticipantsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "schoolId" | "competitionId" | "status" | "createdAt", ExtArgs["result"]["participants"]>
   export type ParticipantsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     school?: boolean | SchoolDefaultArgs<ExtArgs>
     competition?: boolean | CompetitionDefaultArgs<ExtArgs>
+    marks?: boolean | Participants$marksArgs<ExtArgs>
+    _count?: boolean | ParticipantsCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ParticipantsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     school?: boolean | SchoolDefaultArgs<ExtArgs>
@@ -1525,11 +1819,13 @@ export namespace Prisma {
     objects: {
       school: Prisma.$SchoolPayload<ExtArgs>
       competition: Prisma.$CompetitionPayload<ExtArgs>
+      marks: Prisma.$MarksPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       schoolId: string
       competitionId: string
+      status: $Enums.APPLICATION_STATUS
       createdAt: Date
     }, ExtArgs["result"]["participants"]>
     composites: {}
@@ -1927,6 +2223,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     school<T extends SchoolDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SchoolDefaultArgs<ExtArgs>>): Prisma__SchoolClient<$Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     competition<T extends CompetitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompetitionDefaultArgs<ExtArgs>>): Prisma__CompetitionClient<$Result.GetResult<Prisma.$CompetitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    marks<T extends Participants$marksArgs<ExtArgs> = {}>(args?: Subset<T, Participants$marksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1959,6 +2256,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Participants", 'String'>
     readonly schoolId: FieldRef<"Participants", 'String'>
     readonly competitionId: FieldRef<"Participants", 'String'>
+    readonly status: FieldRef<"Participants", 'APPLICATION_STATUS'>
     readonly createdAt: FieldRef<"Participants", 'DateTime'>
   }
     
@@ -2356,6 +2654,30 @@ export namespace Prisma {
   }
 
   /**
+   * Participants.marks
+   */
+  export type Participants$marksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    where?: MarksWhereInput
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    cursor?: MarksWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
+  }
+
+  /**
    * Participants without action
    */
   export type ParticipantsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2387,10 +2709,12 @@ export namespace Prisma {
   }
 
   export type CompetitionAvgAggregateOutputType = {
+    maxParticipants: number | null
     totalParticipants: number | null
   }
 
   export type CompetitionSumAggregateOutputType = {
+    maxParticipants: number | null
     totalParticipants: number | null
   }
 
@@ -2399,6 +2723,9 @@ export namespace Prisma {
     name: string | null
     schedule: Date | null
     description: string | null
+    venue: string | null
+    maxParticipants: number | null
+    status: $Enums.COMPETITION_STATUS | null
     totalParticipants: number | null
   }
 
@@ -2407,6 +2734,9 @@ export namespace Prisma {
     name: string | null
     schedule: Date | null
     description: string | null
+    venue: string | null
+    maxParticipants: number | null
+    status: $Enums.COMPETITION_STATUS | null
     totalParticipants: number | null
   }
 
@@ -2415,16 +2745,21 @@ export namespace Prisma {
     name: number
     schedule: number
     description: number
+    venue: number
+    maxParticipants: number
+    status: number
     totalParticipants: number
     _all: number
   }
 
 
   export type CompetitionAvgAggregateInputType = {
+    maxParticipants?: true
     totalParticipants?: true
   }
 
   export type CompetitionSumAggregateInputType = {
+    maxParticipants?: true
     totalParticipants?: true
   }
 
@@ -2433,6 +2768,9 @@ export namespace Prisma {
     name?: true
     schedule?: true
     description?: true
+    venue?: true
+    maxParticipants?: true
+    status?: true
     totalParticipants?: true
   }
 
@@ -2441,6 +2779,9 @@ export namespace Prisma {
     name?: true
     schedule?: true
     description?: true
+    venue?: true
+    maxParticipants?: true
+    status?: true
     totalParticipants?: true
   }
 
@@ -2449,6 +2790,9 @@ export namespace Prisma {
     name?: true
     schedule?: true
     description?: true
+    venue?: true
+    maxParticipants?: true
+    status?: true
     totalParticipants?: true
     _all?: true
   }
@@ -2544,6 +2888,9 @@ export namespace Prisma {
     name: string
     schedule: Date
     description: string
+    venue: string
+    maxParticipants: number
+    status: $Enums.COMPETITION_STATUS
     totalParticipants: number
     _count: CompetitionCountAggregateOutputType | null
     _avg: CompetitionAvgAggregateOutputType | null
@@ -2571,6 +2918,9 @@ export namespace Prisma {
     name?: boolean
     schedule?: boolean
     description?: boolean
+    venue?: boolean
+    maxParticipants?: boolean
+    status?: boolean
     totalParticipants?: boolean
     judges?: boolean | Competition$judgesArgs<ExtArgs>
     participants?: boolean | Competition$participantsArgs<ExtArgs>
@@ -2582,6 +2932,9 @@ export namespace Prisma {
     name?: boolean
     schedule?: boolean
     description?: boolean
+    venue?: boolean
+    maxParticipants?: boolean
+    status?: boolean
     totalParticipants?: boolean
   }, ExtArgs["result"]["competition"]>
 
@@ -2590,6 +2943,9 @@ export namespace Prisma {
     name?: boolean
     schedule?: boolean
     description?: boolean
+    venue?: boolean
+    maxParticipants?: boolean
+    status?: boolean
     totalParticipants?: boolean
   }, ExtArgs["result"]["competition"]>
 
@@ -2598,10 +2954,13 @@ export namespace Prisma {
     name?: boolean
     schedule?: boolean
     description?: boolean
+    venue?: boolean
+    maxParticipants?: boolean
+    status?: boolean
     totalParticipants?: boolean
   }
 
-  export type CompetitionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "schedule" | "description" | "totalParticipants", ExtArgs["result"]["competition"]>
+  export type CompetitionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "schedule" | "description" | "venue" | "maxParticipants" | "status" | "totalParticipants", ExtArgs["result"]["competition"]>
   export type CompetitionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     judges?: boolean | Competition$judgesArgs<ExtArgs>
     participants?: boolean | Competition$participantsArgs<ExtArgs>
@@ -2621,6 +2980,9 @@ export namespace Prisma {
       name: string
       schedule: Date
       description: string
+      venue: string
+      maxParticipants: number
+      status: $Enums.COMPETITION_STATUS
       totalParticipants: number
     }, ExtArgs["result"]["competition"]>
     composites: {}
@@ -3051,6 +3413,9 @@ export namespace Prisma {
     readonly name: FieldRef<"Competition", 'String'>
     readonly schedule: FieldRef<"Competition", 'DateTime'>
     readonly description: FieldRef<"Competition", 'String'>
+    readonly venue: FieldRef<"Competition", 'String'>
+    readonly maxParticipants: FieldRef<"Competition", 'Int'>
+    readonly status: FieldRef<"Competition", 'COMPETITION_STATUS'>
     readonly totalParticipants: FieldRef<"Competition", 'Int'>
   }
     
@@ -3656,6 +4021,7 @@ export namespace Prisma {
     userId?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     competitions?: boolean | Judges$competitionsArgs<ExtArgs>
+    marks?: boolean | Judges$marksArgs<ExtArgs>
     _count?: boolean | JudgesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["judges"]>
 
@@ -3683,6 +4049,7 @@ export namespace Prisma {
   export type JudgesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UsersDefaultArgs<ExtArgs>
     competitions?: boolean | Judges$competitionsArgs<ExtArgs>
+    marks?: boolean | Judges$marksArgs<ExtArgs>
     _count?: boolean | JudgesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type JudgesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3697,6 +4064,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UsersPayload<ExtArgs>
       competitions: Prisma.$CompetitionPayload<ExtArgs>[]
+      marks: Prisma.$MarksPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4098,6 +4466,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     competitions<T extends Judges$competitionsArgs<ExtArgs> = {}>(args?: Subset<T, Judges$competitionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompetitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    marks<T extends Judges$marksArgs<ExtArgs> = {}>(args?: Subset<T, Judges$marksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4550,6 +4919,30 @@ export namespace Prisma {
   }
 
   /**
+   * Judges.marks
+   */
+  export type Judges$marksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    where?: MarksWhereInput
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    cursor?: MarksWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
+  }
+
+  /**
    * Judges without action
    */
   export type JudgesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4565,6 +4958,1119 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: JudgesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Marks
+   */
+
+  export type AggregateMarks = {
+    _count: MarksCountAggregateOutputType | null
+    _avg: MarksAvgAggregateOutputType | null
+    _sum: MarksSumAggregateOutputType | null
+    _min: MarksMinAggregateOutputType | null
+    _max: MarksMaxAggregateOutputType | null
+  }
+
+  export type MarksAvgAggregateOutputType = {
+    score: number | null
+  }
+
+  export type MarksSumAggregateOutputType = {
+    score: number | null
+  }
+
+  export type MarksMinAggregateOutputType = {
+    id: string | null
+    score: number | null
+    comments: string | null
+    createdAt: Date | null
+    judgeId: string | null
+    participantId: string | null
+  }
+
+  export type MarksMaxAggregateOutputType = {
+    id: string | null
+    score: number | null
+    comments: string | null
+    createdAt: Date | null
+    judgeId: string | null
+    participantId: string | null
+  }
+
+  export type MarksCountAggregateOutputType = {
+    id: number
+    score: number
+    comments: number
+    createdAt: number
+    judgeId: number
+    participantId: number
+    _all: number
+  }
+
+
+  export type MarksAvgAggregateInputType = {
+    score?: true
+  }
+
+  export type MarksSumAggregateInputType = {
+    score?: true
+  }
+
+  export type MarksMinAggregateInputType = {
+    id?: true
+    score?: true
+    comments?: true
+    createdAt?: true
+    judgeId?: true
+    participantId?: true
+  }
+
+  export type MarksMaxAggregateInputType = {
+    id?: true
+    score?: true
+    comments?: true
+    createdAt?: true
+    judgeId?: true
+    participantId?: true
+  }
+
+  export type MarksCountAggregateInputType = {
+    id?: true
+    score?: true
+    comments?: true
+    createdAt?: true
+    judgeId?: true
+    participantId?: true
+    _all?: true
+  }
+
+  export type MarksAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Marks to aggregate.
+     */
+    where?: MarksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Marks to fetch.
+     */
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MarksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Marks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Marks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Marks
+    **/
+    _count?: true | MarksCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MarksAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MarksSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MarksMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MarksMaxAggregateInputType
+  }
+
+  export type GetMarksAggregateType<T extends MarksAggregateArgs> = {
+        [P in keyof T & keyof AggregateMarks]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMarks[P]>
+      : GetScalarType<T[P], AggregateMarks[P]>
+  }
+
+
+
+
+  export type MarksGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarksWhereInput
+    orderBy?: MarksOrderByWithAggregationInput | MarksOrderByWithAggregationInput[]
+    by: MarksScalarFieldEnum[] | MarksScalarFieldEnum
+    having?: MarksScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MarksCountAggregateInputType | true
+    _avg?: MarksAvgAggregateInputType
+    _sum?: MarksSumAggregateInputType
+    _min?: MarksMinAggregateInputType
+    _max?: MarksMaxAggregateInputType
+  }
+
+  export type MarksGroupByOutputType = {
+    id: string
+    score: number
+    comments: string
+    createdAt: Date
+    judgeId: string
+    participantId: string
+    _count: MarksCountAggregateOutputType | null
+    _avg: MarksAvgAggregateOutputType | null
+    _sum: MarksSumAggregateOutputType | null
+    _min: MarksMinAggregateOutputType | null
+    _max: MarksMaxAggregateOutputType | null
+  }
+
+  type GetMarksGroupByPayload<T extends MarksGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MarksGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MarksGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MarksGroupByOutputType[P]>
+            : GetScalarType<T[P], MarksGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MarksSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    score?: boolean
+    comments?: boolean
+    createdAt?: boolean
+    judgeId?: boolean
+    participantId?: boolean
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["marks"]>
+
+  export type MarksSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    score?: boolean
+    comments?: boolean
+    createdAt?: boolean
+    judgeId?: boolean
+    participantId?: boolean
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["marks"]>
+
+  export type MarksSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    score?: boolean
+    comments?: boolean
+    createdAt?: boolean
+    judgeId?: boolean
+    participantId?: boolean
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["marks"]>
+
+  export type MarksSelectScalar = {
+    id?: boolean
+    score?: boolean
+    comments?: boolean
+    createdAt?: boolean
+    judgeId?: boolean
+    participantId?: boolean
+  }
+
+  export type MarksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "score" | "comments" | "createdAt" | "judgeId" | "participantId", ExtArgs["result"]["marks"]>
+  export type MarksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }
+  export type MarksIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }
+  export type MarksIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    judge?: boolean | JudgesDefaultArgs<ExtArgs>
+    participant?: boolean | ParticipantsDefaultArgs<ExtArgs>
+  }
+
+  export type $MarksPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Marks"
+    objects: {
+      judge: Prisma.$JudgesPayload<ExtArgs>
+      participant: Prisma.$ParticipantsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      score: number
+      comments: string
+      createdAt: Date
+      judgeId: string
+      participantId: string
+    }, ExtArgs["result"]["marks"]>
+    composites: {}
+  }
+
+  type MarksGetPayload<S extends boolean | null | undefined | MarksDefaultArgs> = $Result.GetResult<Prisma.$MarksPayload, S>
+
+  type MarksCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MarksFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MarksCountAggregateInputType | true
+    }
+
+  export interface MarksDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Marks'], meta: { name: 'Marks' } }
+    /**
+     * Find zero or one Marks that matches the filter.
+     * @param {MarksFindUniqueArgs} args - Arguments to find a Marks
+     * @example
+     * // Get one Marks
+     * const marks = await prisma.marks.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MarksFindUniqueArgs>(args: SelectSubset<T, MarksFindUniqueArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Marks that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MarksFindUniqueOrThrowArgs} args - Arguments to find a Marks
+     * @example
+     * // Get one Marks
+     * const marks = await prisma.marks.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MarksFindUniqueOrThrowArgs>(args: SelectSubset<T, MarksFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Marks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksFindFirstArgs} args - Arguments to find a Marks
+     * @example
+     * // Get one Marks
+     * const marks = await prisma.marks.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MarksFindFirstArgs>(args?: SelectSubset<T, MarksFindFirstArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Marks that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksFindFirstOrThrowArgs} args - Arguments to find a Marks
+     * @example
+     * // Get one Marks
+     * const marks = await prisma.marks.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MarksFindFirstOrThrowArgs>(args?: SelectSubset<T, MarksFindFirstOrThrowArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Marks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Marks
+     * const marks = await prisma.marks.findMany()
+     * 
+     * // Get first 10 Marks
+     * const marks = await prisma.marks.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const marksWithIdOnly = await prisma.marks.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MarksFindManyArgs>(args?: SelectSubset<T, MarksFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Marks.
+     * @param {MarksCreateArgs} args - Arguments to create a Marks.
+     * @example
+     * // Create one Marks
+     * const Marks = await prisma.marks.create({
+     *   data: {
+     *     // ... data to create a Marks
+     *   }
+     * })
+     * 
+     */
+    create<T extends MarksCreateArgs>(args: SelectSubset<T, MarksCreateArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Marks.
+     * @param {MarksCreateManyArgs} args - Arguments to create many Marks.
+     * @example
+     * // Create many Marks
+     * const marks = await prisma.marks.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MarksCreateManyArgs>(args?: SelectSubset<T, MarksCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Marks and returns the data saved in the database.
+     * @param {MarksCreateManyAndReturnArgs} args - Arguments to create many Marks.
+     * @example
+     * // Create many Marks
+     * const marks = await prisma.marks.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Marks and only return the `id`
+     * const marksWithIdOnly = await prisma.marks.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MarksCreateManyAndReturnArgs>(args?: SelectSubset<T, MarksCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Marks.
+     * @param {MarksDeleteArgs} args - Arguments to delete one Marks.
+     * @example
+     * // Delete one Marks
+     * const Marks = await prisma.marks.delete({
+     *   where: {
+     *     // ... filter to delete one Marks
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MarksDeleteArgs>(args: SelectSubset<T, MarksDeleteArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Marks.
+     * @param {MarksUpdateArgs} args - Arguments to update one Marks.
+     * @example
+     * // Update one Marks
+     * const marks = await prisma.marks.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MarksUpdateArgs>(args: SelectSubset<T, MarksUpdateArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Marks.
+     * @param {MarksDeleteManyArgs} args - Arguments to filter Marks to delete.
+     * @example
+     * // Delete a few Marks
+     * const { count } = await prisma.marks.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MarksDeleteManyArgs>(args?: SelectSubset<T, MarksDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Marks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Marks
+     * const marks = await prisma.marks.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MarksUpdateManyArgs>(args: SelectSubset<T, MarksUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Marks and returns the data updated in the database.
+     * @param {MarksUpdateManyAndReturnArgs} args - Arguments to update many Marks.
+     * @example
+     * // Update many Marks
+     * const marks = await prisma.marks.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Marks and only return the `id`
+     * const marksWithIdOnly = await prisma.marks.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MarksUpdateManyAndReturnArgs>(args: SelectSubset<T, MarksUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Marks.
+     * @param {MarksUpsertArgs} args - Arguments to update or create a Marks.
+     * @example
+     * // Update or create a Marks
+     * const marks = await prisma.marks.upsert({
+     *   create: {
+     *     // ... data to create a Marks
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Marks we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MarksUpsertArgs>(args: SelectSubset<T, MarksUpsertArgs<ExtArgs>>): Prisma__MarksClient<$Result.GetResult<Prisma.$MarksPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Marks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksCountArgs} args - Arguments to filter Marks to count.
+     * @example
+     * // Count the number of Marks
+     * const count = await prisma.marks.count({
+     *   where: {
+     *     // ... the filter for the Marks we want to count
+     *   }
+     * })
+    **/
+    count<T extends MarksCountArgs>(
+      args?: Subset<T, MarksCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MarksCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Marks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MarksAggregateArgs>(args: Subset<T, MarksAggregateArgs>): Prisma.PrismaPromise<GetMarksAggregateType<T>>
+
+    /**
+     * Group by Marks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarksGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MarksGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MarksGroupByArgs['orderBy'] }
+        : { orderBy?: MarksGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MarksGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMarksGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Marks model
+   */
+  readonly fields: MarksFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Marks.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MarksClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    judge<T extends JudgesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JudgesDefaultArgs<ExtArgs>>): Prisma__JudgesClient<$Result.GetResult<Prisma.$JudgesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    participant<T extends ParticipantsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ParticipantsDefaultArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Marks model
+   */
+  interface MarksFieldRefs {
+    readonly id: FieldRef<"Marks", 'String'>
+    readonly score: FieldRef<"Marks", 'Int'>
+    readonly comments: FieldRef<"Marks", 'String'>
+    readonly createdAt: FieldRef<"Marks", 'DateTime'>
+    readonly judgeId: FieldRef<"Marks", 'String'>
+    readonly participantId: FieldRef<"Marks", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Marks findUnique
+   */
+  export type MarksFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter, which Marks to fetch.
+     */
+    where: MarksWhereUniqueInput
+  }
+
+  /**
+   * Marks findUniqueOrThrow
+   */
+  export type MarksFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter, which Marks to fetch.
+     */
+    where: MarksWhereUniqueInput
+  }
+
+  /**
+   * Marks findFirst
+   */
+  export type MarksFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter, which Marks to fetch.
+     */
+    where?: MarksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Marks to fetch.
+     */
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Marks.
+     */
+    cursor?: MarksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Marks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Marks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Marks.
+     */
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
+  }
+
+  /**
+   * Marks findFirstOrThrow
+   */
+  export type MarksFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter, which Marks to fetch.
+     */
+    where?: MarksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Marks to fetch.
+     */
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Marks.
+     */
+    cursor?: MarksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Marks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Marks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Marks.
+     */
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
+  }
+
+  /**
+   * Marks findMany
+   */
+  export type MarksFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter, which Marks to fetch.
+     */
+    where?: MarksWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Marks to fetch.
+     */
+    orderBy?: MarksOrderByWithRelationInput | MarksOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Marks.
+     */
+    cursor?: MarksWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Marks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Marks.
+     */
+    skip?: number
+    distinct?: MarksScalarFieldEnum | MarksScalarFieldEnum[]
+  }
+
+  /**
+   * Marks create
+   */
+  export type MarksCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Marks.
+     */
+    data: XOR<MarksCreateInput, MarksUncheckedCreateInput>
+  }
+
+  /**
+   * Marks createMany
+   */
+  export type MarksCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Marks.
+     */
+    data: MarksCreateManyInput | MarksCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Marks createManyAndReturn
+   */
+  export type MarksCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * The data used to create many Marks.
+     */
+    data: MarksCreateManyInput | MarksCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Marks update
+   */
+  export type MarksUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Marks.
+     */
+    data: XOR<MarksUpdateInput, MarksUncheckedUpdateInput>
+    /**
+     * Choose, which Marks to update.
+     */
+    where: MarksWhereUniqueInput
+  }
+
+  /**
+   * Marks updateMany
+   */
+  export type MarksUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Marks.
+     */
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyInput>
+    /**
+     * Filter which Marks to update
+     */
+    where?: MarksWhereInput
+    /**
+     * Limit how many Marks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Marks updateManyAndReturn
+   */
+  export type MarksUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * The data used to update Marks.
+     */
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyInput>
+    /**
+     * Filter which Marks to update
+     */
+    where?: MarksWhereInput
+    /**
+     * Limit how many Marks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Marks upsert
+   */
+  export type MarksUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Marks to update in case it exists.
+     */
+    where: MarksWhereUniqueInput
+    /**
+     * In case the Marks found by the `where` argument doesn't exist, create a new Marks with this data.
+     */
+    create: XOR<MarksCreateInput, MarksUncheckedCreateInput>
+    /**
+     * In case the Marks was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MarksUpdateInput, MarksUncheckedUpdateInput>
+  }
+
+  /**
+   * Marks delete
+   */
+  export type MarksDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
+    /**
+     * Filter which Marks to delete.
+     */
+    where: MarksWhereUniqueInput
+  }
+
+  /**
+   * Marks deleteMany
+   */
+  export type MarksDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Marks to delete
+     */
+    where?: MarksWhereInput
+    /**
+     * Limit how many Marks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Marks without action
+   */
+  export type MarksDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Marks
+     */
+    select?: MarksSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Marks
+     */
+    omit?: MarksOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MarksInclude<ExtArgs> | null
   }
 
 
@@ -4718,6 +6224,7 @@ export namespace Prisma {
     userId?: boolean
     user?: boolean | UsersDefaultArgs<ExtArgs>
     participant?: boolean | School$participantArgs<ExtArgs>
+    _count?: boolean | SchoolCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["school"]>
 
   export type SchoolSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4744,6 +6251,7 @@ export namespace Prisma {
   export type SchoolInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UsersDefaultArgs<ExtArgs>
     participant?: boolean | School$participantArgs<ExtArgs>
+    _count?: boolean | SchoolCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SchoolIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UsersDefaultArgs<ExtArgs>
@@ -4756,7 +6264,7 @@ export namespace Prisma {
     name: "School"
     objects: {
       user: Prisma.$UsersPayload<ExtArgs>
-      participant: Prisma.$ParticipantsPayload<ExtArgs> | null
+      participant: Prisma.$ParticipantsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5157,7 +6665,7 @@ export namespace Prisma {
   export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    participant<T extends School$participantArgs<ExtArgs> = {}>(args?: Subset<T, School$participantArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    participant<T extends School$participantArgs<ExtArgs> = {}>(args?: Subset<T, School$participantArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5602,6 +7110,11 @@ export namespace Prisma {
      */
     include?: ParticipantsInclude<ExtArgs> | null
     where?: ParticipantsWhereInput
+    orderBy?: ParticipantsOrderByWithRelationInput | ParticipantsOrderByWithRelationInput[]
+    cursor?: ParticipantsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ParticipantsScalarFieldEnum | ParticipantsScalarFieldEnum[]
   }
 
   /**
@@ -5805,6 +7318,7 @@ export namespace Prisma {
     updatedAt?: boolean
     school?: boolean | Users$schoolArgs<ExtArgs>
     judge?: boolean | Users$judgeArgs<ExtArgs>
+    verification?: boolean | Users$verificationArgs<ExtArgs>
   }, ExtArgs["result"]["users"]>
 
   export type UsersSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5841,6 +7355,7 @@ export namespace Prisma {
   export type UsersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     school?: boolean | Users$schoolArgs<ExtArgs>
     judge?: boolean | Users$judgeArgs<ExtArgs>
+    verification?: boolean | Users$verificationArgs<ExtArgs>
   }
   export type UsersIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type UsersIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5850,6 +7365,7 @@ export namespace Prisma {
     objects: {
       school: Prisma.$SchoolPayload<ExtArgs> | null
       judge: Prisma.$JudgesPayload<ExtArgs> | null
+      verification: Prisma.$VerificationsPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6255,6 +7771,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     school<T extends Users$schoolArgs<ExtArgs> = {}>(args?: Subset<T, Users$schoolArgs<ExtArgs>>): Prisma__SchoolClient<$Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     judge<T extends Users$judgeArgs<ExtArgs> = {}>(args?: Subset<T, Users$judgeArgs<ExtArgs>>): Prisma__JudgesClient<$Result.GetResult<Prisma.$JudgesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    verification<T extends Users$verificationArgs<ExtArgs> = {}>(args?: Subset<T, Users$verificationArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6717,6 +8234,25 @@ export namespace Prisma {
   }
 
   /**
+   * Users.verification
+   */
+  export type Users$verificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    where?: VerificationsWhereInput
+  }
+
+  /**
    * Users without action
    */
   export type UsersDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6732,6 +8268,1051 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UsersInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Verifications
+   */
+
+  export type AggregateVerifications = {
+    _count: VerificationsCountAggregateOutputType | null
+    _min: VerificationsMinAggregateOutputType | null
+    _max: VerificationsMaxAggregateOutputType | null
+  }
+
+  export type VerificationsMinAggregateOutputType = {
+    id: string | null
+    code: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type VerificationsMaxAggregateOutputType = {
+    id: string | null
+    code: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type VerificationsCountAggregateOutputType = {
+    id: number
+    code: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type VerificationsMinAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type VerificationsMaxAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type VerificationsCountAggregateInputType = {
+    id?: true
+    code?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type VerificationsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Verifications to aggregate.
+     */
+    where?: VerificationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Verifications to fetch.
+     */
+    orderBy?: VerificationsOrderByWithRelationInput | VerificationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VerificationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Verifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Verifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Verifications
+    **/
+    _count?: true | VerificationsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VerificationsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VerificationsMaxAggregateInputType
+  }
+
+  export type GetVerificationsAggregateType<T extends VerificationsAggregateArgs> = {
+        [P in keyof T & keyof AggregateVerifications]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVerifications[P]>
+      : GetScalarType<T[P], AggregateVerifications[P]>
+  }
+
+
+
+
+  export type VerificationsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VerificationsWhereInput
+    orderBy?: VerificationsOrderByWithAggregationInput | VerificationsOrderByWithAggregationInput[]
+    by: VerificationsScalarFieldEnum[] | VerificationsScalarFieldEnum
+    having?: VerificationsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VerificationsCountAggregateInputType | true
+    _min?: VerificationsMinAggregateInputType
+    _max?: VerificationsMaxAggregateInputType
+  }
+
+  export type VerificationsGroupByOutputType = {
+    id: string
+    code: string
+    userId: string
+    createdAt: Date
+    _count: VerificationsCountAggregateOutputType | null
+    _min: VerificationsMinAggregateOutputType | null
+    _max: VerificationsMaxAggregateOutputType | null
+  }
+
+  type GetVerificationsGroupByPayload<T extends VerificationsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VerificationsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VerificationsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VerificationsGroupByOutputType[P]>
+            : GetScalarType<T[P], VerificationsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VerificationsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["verifications"]>
+
+  export type VerificationsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["verifications"]>
+
+  export type VerificationsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["verifications"]>
+
+  export type VerificationsSelectScalar = {
+    id?: boolean
+    code?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+  export type VerificationsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "code" | "userId" | "createdAt", ExtArgs["result"]["verifications"]>
+  export type VerificationsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }
+  export type VerificationsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }
+  export type VerificationsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UsersDefaultArgs<ExtArgs>
+  }
+
+  export type $VerificationsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Verifications"
+    objects: {
+      user: Prisma.$UsersPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      code: string
+      userId: string
+      createdAt: Date
+    }, ExtArgs["result"]["verifications"]>
+    composites: {}
+  }
+
+  type VerificationsGetPayload<S extends boolean | null | undefined | VerificationsDefaultArgs> = $Result.GetResult<Prisma.$VerificationsPayload, S>
+
+  type VerificationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VerificationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VerificationsCountAggregateInputType | true
+    }
+
+  export interface VerificationsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Verifications'], meta: { name: 'Verifications' } }
+    /**
+     * Find zero or one Verifications that matches the filter.
+     * @param {VerificationsFindUniqueArgs} args - Arguments to find a Verifications
+     * @example
+     * // Get one Verifications
+     * const verifications = await prisma.verifications.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VerificationsFindUniqueArgs>(args: SelectSubset<T, VerificationsFindUniqueArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Verifications that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VerificationsFindUniqueOrThrowArgs} args - Arguments to find a Verifications
+     * @example
+     * // Get one Verifications
+     * const verifications = await prisma.verifications.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VerificationsFindUniqueOrThrowArgs>(args: SelectSubset<T, VerificationsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Verifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsFindFirstArgs} args - Arguments to find a Verifications
+     * @example
+     * // Get one Verifications
+     * const verifications = await prisma.verifications.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VerificationsFindFirstArgs>(args?: SelectSubset<T, VerificationsFindFirstArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Verifications that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsFindFirstOrThrowArgs} args - Arguments to find a Verifications
+     * @example
+     * // Get one Verifications
+     * const verifications = await prisma.verifications.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VerificationsFindFirstOrThrowArgs>(args?: SelectSubset<T, VerificationsFindFirstOrThrowArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Verifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Verifications
+     * const verifications = await prisma.verifications.findMany()
+     * 
+     * // Get first 10 Verifications
+     * const verifications = await prisma.verifications.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const verificationsWithIdOnly = await prisma.verifications.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VerificationsFindManyArgs>(args?: SelectSubset<T, VerificationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Verifications.
+     * @param {VerificationsCreateArgs} args - Arguments to create a Verifications.
+     * @example
+     * // Create one Verifications
+     * const Verifications = await prisma.verifications.create({
+     *   data: {
+     *     // ... data to create a Verifications
+     *   }
+     * })
+     * 
+     */
+    create<T extends VerificationsCreateArgs>(args: SelectSubset<T, VerificationsCreateArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Verifications.
+     * @param {VerificationsCreateManyArgs} args - Arguments to create many Verifications.
+     * @example
+     * // Create many Verifications
+     * const verifications = await prisma.verifications.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VerificationsCreateManyArgs>(args?: SelectSubset<T, VerificationsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Verifications and returns the data saved in the database.
+     * @param {VerificationsCreateManyAndReturnArgs} args - Arguments to create many Verifications.
+     * @example
+     * // Create many Verifications
+     * const verifications = await prisma.verifications.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Verifications and only return the `id`
+     * const verificationsWithIdOnly = await prisma.verifications.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends VerificationsCreateManyAndReturnArgs>(args?: SelectSubset<T, VerificationsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Verifications.
+     * @param {VerificationsDeleteArgs} args - Arguments to delete one Verifications.
+     * @example
+     * // Delete one Verifications
+     * const Verifications = await prisma.verifications.delete({
+     *   where: {
+     *     // ... filter to delete one Verifications
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VerificationsDeleteArgs>(args: SelectSubset<T, VerificationsDeleteArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Verifications.
+     * @param {VerificationsUpdateArgs} args - Arguments to update one Verifications.
+     * @example
+     * // Update one Verifications
+     * const verifications = await prisma.verifications.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VerificationsUpdateArgs>(args: SelectSubset<T, VerificationsUpdateArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Verifications.
+     * @param {VerificationsDeleteManyArgs} args - Arguments to filter Verifications to delete.
+     * @example
+     * // Delete a few Verifications
+     * const { count } = await prisma.verifications.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VerificationsDeleteManyArgs>(args?: SelectSubset<T, VerificationsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Verifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Verifications
+     * const verifications = await prisma.verifications.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VerificationsUpdateManyArgs>(args: SelectSubset<T, VerificationsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Verifications and returns the data updated in the database.
+     * @param {VerificationsUpdateManyAndReturnArgs} args - Arguments to update many Verifications.
+     * @example
+     * // Update many Verifications
+     * const verifications = await prisma.verifications.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Verifications and only return the `id`
+     * const verificationsWithIdOnly = await prisma.verifications.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends VerificationsUpdateManyAndReturnArgs>(args: SelectSubset<T, VerificationsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Verifications.
+     * @param {VerificationsUpsertArgs} args - Arguments to update or create a Verifications.
+     * @example
+     * // Update or create a Verifications
+     * const verifications = await prisma.verifications.upsert({
+     *   create: {
+     *     // ... data to create a Verifications
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Verifications we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VerificationsUpsertArgs>(args: SelectSubset<T, VerificationsUpsertArgs<ExtArgs>>): Prisma__VerificationsClient<$Result.GetResult<Prisma.$VerificationsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Verifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsCountArgs} args - Arguments to filter Verifications to count.
+     * @example
+     * // Count the number of Verifications
+     * const count = await prisma.verifications.count({
+     *   where: {
+     *     // ... the filter for the Verifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends VerificationsCountArgs>(
+      args?: Subset<T, VerificationsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VerificationsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Verifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VerificationsAggregateArgs>(args: Subset<T, VerificationsAggregateArgs>): Prisma.PrismaPromise<GetVerificationsAggregateType<T>>
+
+    /**
+     * Group by Verifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VerificationsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VerificationsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VerificationsGroupByArgs['orderBy'] }
+        : { orderBy?: VerificationsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VerificationsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVerificationsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Verifications model
+   */
+  readonly fields: VerificationsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Verifications.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VerificationsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UsersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsersDefaultArgs<ExtArgs>>): Prisma__UsersClient<$Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Verifications model
+   */
+  interface VerificationsFieldRefs {
+    readonly id: FieldRef<"Verifications", 'String'>
+    readonly code: FieldRef<"Verifications", 'String'>
+    readonly userId: FieldRef<"Verifications", 'String'>
+    readonly createdAt: FieldRef<"Verifications", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Verifications findUnique
+   */
+  export type VerificationsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter, which Verifications to fetch.
+     */
+    where: VerificationsWhereUniqueInput
+  }
+
+  /**
+   * Verifications findUniqueOrThrow
+   */
+  export type VerificationsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter, which Verifications to fetch.
+     */
+    where: VerificationsWhereUniqueInput
+  }
+
+  /**
+   * Verifications findFirst
+   */
+  export type VerificationsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter, which Verifications to fetch.
+     */
+    where?: VerificationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Verifications to fetch.
+     */
+    orderBy?: VerificationsOrderByWithRelationInput | VerificationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Verifications.
+     */
+    cursor?: VerificationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Verifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Verifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Verifications.
+     */
+    distinct?: VerificationsScalarFieldEnum | VerificationsScalarFieldEnum[]
+  }
+
+  /**
+   * Verifications findFirstOrThrow
+   */
+  export type VerificationsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter, which Verifications to fetch.
+     */
+    where?: VerificationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Verifications to fetch.
+     */
+    orderBy?: VerificationsOrderByWithRelationInput | VerificationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Verifications.
+     */
+    cursor?: VerificationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Verifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Verifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Verifications.
+     */
+    distinct?: VerificationsScalarFieldEnum | VerificationsScalarFieldEnum[]
+  }
+
+  /**
+   * Verifications findMany
+   */
+  export type VerificationsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter, which Verifications to fetch.
+     */
+    where?: VerificationsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Verifications to fetch.
+     */
+    orderBy?: VerificationsOrderByWithRelationInput | VerificationsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Verifications.
+     */
+    cursor?: VerificationsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Verifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Verifications.
+     */
+    skip?: number
+    distinct?: VerificationsScalarFieldEnum | VerificationsScalarFieldEnum[]
+  }
+
+  /**
+   * Verifications create
+   */
+  export type VerificationsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Verifications.
+     */
+    data: XOR<VerificationsCreateInput, VerificationsUncheckedCreateInput>
+  }
+
+  /**
+   * Verifications createMany
+   */
+  export type VerificationsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Verifications.
+     */
+    data: VerificationsCreateManyInput | VerificationsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Verifications createManyAndReturn
+   */
+  export type VerificationsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * The data used to create many Verifications.
+     */
+    data: VerificationsCreateManyInput | VerificationsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Verifications update
+   */
+  export type VerificationsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Verifications.
+     */
+    data: XOR<VerificationsUpdateInput, VerificationsUncheckedUpdateInput>
+    /**
+     * Choose, which Verifications to update.
+     */
+    where: VerificationsWhereUniqueInput
+  }
+
+  /**
+   * Verifications updateMany
+   */
+  export type VerificationsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Verifications.
+     */
+    data: XOR<VerificationsUpdateManyMutationInput, VerificationsUncheckedUpdateManyInput>
+    /**
+     * Filter which Verifications to update
+     */
+    where?: VerificationsWhereInput
+    /**
+     * Limit how many Verifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Verifications updateManyAndReturn
+   */
+  export type VerificationsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * The data used to update Verifications.
+     */
+    data: XOR<VerificationsUpdateManyMutationInput, VerificationsUncheckedUpdateManyInput>
+    /**
+     * Filter which Verifications to update
+     */
+    where?: VerificationsWhereInput
+    /**
+     * Limit how many Verifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Verifications upsert
+   */
+  export type VerificationsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Verifications to update in case it exists.
+     */
+    where: VerificationsWhereUniqueInput
+    /**
+     * In case the Verifications found by the `where` argument doesn't exist, create a new Verifications with this data.
+     */
+    create: XOR<VerificationsCreateInput, VerificationsUncheckedCreateInput>
+    /**
+     * In case the Verifications was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VerificationsUpdateInput, VerificationsUncheckedUpdateInput>
+  }
+
+  /**
+   * Verifications delete
+   */
+  export type VerificationsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
+    /**
+     * Filter which Verifications to delete.
+     */
+    where: VerificationsWhereUniqueInput
+  }
+
+  /**
+   * Verifications deleteMany
+   */
+  export type VerificationsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Verifications to delete
+     */
+    where?: VerificationsWhereInput
+    /**
+     * Limit how many Verifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Verifications without action
+   */
+  export type VerificationsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Verifications
+     */
+    select?: VerificationsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Verifications
+     */
+    omit?: VerificationsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VerificationsInclude<ExtArgs> | null
   }
 
 
@@ -6753,6 +9334,7 @@ export namespace Prisma {
     id: 'id',
     schoolId: 'schoolId',
     competitionId: 'competitionId',
+    status: 'status',
     createdAt: 'createdAt'
   };
 
@@ -6764,6 +9346,9 @@ export namespace Prisma {
     name: 'name',
     schedule: 'schedule',
     description: 'description',
+    venue: 'venue',
+    maxParticipants: 'maxParticipants',
+    status: 'status',
     totalParticipants: 'totalParticipants'
   };
 
@@ -6777,6 +9362,18 @@ export namespace Prisma {
   };
 
   export type JudgesScalarFieldEnum = (typeof JudgesScalarFieldEnum)[keyof typeof JudgesScalarFieldEnum]
+
+
+  export const MarksScalarFieldEnum: {
+    id: 'id',
+    score: 'score',
+    comments: 'comments',
+    createdAt: 'createdAt',
+    judgeId: 'judgeId',
+    participantId: 'participantId'
+  };
+
+  export type MarksScalarFieldEnum = (typeof MarksScalarFieldEnum)[keyof typeof MarksScalarFieldEnum]
 
 
   export const SchoolScalarFieldEnum: {
@@ -6799,6 +9396,16 @@ export namespace Prisma {
   };
 
   export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
+
+
+  export const VerificationsScalarFieldEnum: {
+    id: 'id',
+    code: 'code',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type VerificationsScalarFieldEnum = (typeof VerificationsScalarFieldEnum)[keyof typeof VerificationsScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -6837,6 +9444,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'APPLICATION_STATUS'
+   */
+  export type EnumAPPLICATION_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'APPLICATION_STATUS'>
+    
+
+
+  /**
+   * Reference to a field of type 'APPLICATION_STATUS[]'
+   */
+  export type ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'APPLICATION_STATUS[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -6861,6 +9482,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'COMPETITION_STATUS'
+   */
+  export type EnumCOMPETITION_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'COMPETITION_STATUS'>
+    
+
+
+  /**
+   * Reference to a field of type 'COMPETITION_STATUS[]'
+   */
+  export type ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'COMPETITION_STATUS[]'>
     
 
 
@@ -6902,36 +9537,43 @@ export namespace Prisma {
     id?: StringFilter<"Participants"> | string
     schoolId?: StringFilter<"Participants"> | string
     competitionId?: StringFilter<"Participants"> | string
+    status?: EnumAPPLICATION_STATUSFilter<"Participants"> | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFilter<"Participants"> | Date | string
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
     competition?: XOR<CompetitionScalarRelationFilter, CompetitionWhereInput>
+    marks?: MarksListRelationFilter
   }
 
   export type ParticipantsOrderByWithRelationInput = {
     id?: SortOrder
     schoolId?: SortOrder
     competitionId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     school?: SchoolOrderByWithRelationInput
     competition?: CompetitionOrderByWithRelationInput
+    marks?: MarksOrderByRelationAggregateInput
   }
 
   export type ParticipantsWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    schoolId?: string
+    competitionId?: string
     AND?: ParticipantsWhereInput | ParticipantsWhereInput[]
     OR?: ParticipantsWhereInput[]
     NOT?: ParticipantsWhereInput | ParticipantsWhereInput[]
-    competitionId?: StringFilter<"Participants"> | string
+    schoolId?: StringFilter<"Participants"> | string
+    status?: EnumAPPLICATION_STATUSFilter<"Participants"> | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFilter<"Participants"> | Date | string
     school?: XOR<SchoolScalarRelationFilter, SchoolWhereInput>
     competition?: XOR<CompetitionScalarRelationFilter, CompetitionWhereInput>
-  }, "id" | "schoolId">
+    marks?: MarksListRelationFilter
+  }, "id" | "competitionId">
 
   export type ParticipantsOrderByWithAggregationInput = {
     id?: SortOrder
     schoolId?: SortOrder
     competitionId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     _count?: ParticipantsCountOrderByAggregateInput
     _max?: ParticipantsMaxOrderByAggregateInput
@@ -6945,6 +9587,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Participants"> | string
     schoolId?: StringWithAggregatesFilter<"Participants"> | string
     competitionId?: StringWithAggregatesFilter<"Participants"> | string
+    status?: EnumAPPLICATION_STATUSWithAggregatesFilter<"Participants"> | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeWithAggregatesFilter<"Participants"> | Date | string
   }
 
@@ -6956,6 +9599,9 @@ export namespace Prisma {
     name?: StringFilter<"Competition"> | string
     schedule?: DateTimeFilter<"Competition"> | Date | string
     description?: StringFilter<"Competition"> | string
+    venue?: StringFilter<"Competition"> | string
+    maxParticipants?: IntFilter<"Competition"> | number
+    status?: EnumCOMPETITION_STATUSFilter<"Competition"> | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFilter<"Competition"> | number
     judges?: JudgesListRelationFilter
     participants?: ParticipantsListRelationFilter
@@ -6966,6 +9612,9 @@ export namespace Prisma {
     name?: SortOrder
     schedule?: SortOrder
     description?: SortOrder
+    venue?: SortOrder
+    maxParticipants?: SortOrder
+    status?: SortOrder
     totalParticipants?: SortOrder
     judges?: JudgesOrderByRelationAggregateInput
     participants?: ParticipantsOrderByRelationAggregateInput
@@ -6979,6 +9628,9 @@ export namespace Prisma {
     name?: StringFilter<"Competition"> | string
     schedule?: DateTimeFilter<"Competition"> | Date | string
     description?: StringFilter<"Competition"> | string
+    venue?: StringFilter<"Competition"> | string
+    maxParticipants?: IntFilter<"Competition"> | number
+    status?: EnumCOMPETITION_STATUSFilter<"Competition"> | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFilter<"Competition"> | number
     judges?: JudgesListRelationFilter
     participants?: ParticipantsListRelationFilter
@@ -6989,6 +9641,9 @@ export namespace Prisma {
     name?: SortOrder
     schedule?: SortOrder
     description?: SortOrder
+    venue?: SortOrder
+    maxParticipants?: SortOrder
+    status?: SortOrder
     totalParticipants?: SortOrder
     _count?: CompetitionCountOrderByAggregateInput
     _avg?: CompetitionAvgOrderByAggregateInput
@@ -7005,6 +9660,9 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Competition"> | string
     schedule?: DateTimeWithAggregatesFilter<"Competition"> | Date | string
     description?: StringWithAggregatesFilter<"Competition"> | string
+    venue?: StringWithAggregatesFilter<"Competition"> | string
+    maxParticipants?: IntWithAggregatesFilter<"Competition"> | number
+    status?: EnumCOMPETITION_STATUSWithAggregatesFilter<"Competition"> | $Enums.COMPETITION_STATUS
     totalParticipants?: IntWithAggregatesFilter<"Competition"> | number
   }
 
@@ -7017,6 +9675,7 @@ export namespace Prisma {
     userId?: StringFilter<"Judges"> | string
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     competitions?: CompetitionListRelationFilter
+    marks?: MarksListRelationFilter
   }
 
   export type JudgesOrderByWithRelationInput = {
@@ -7025,6 +9684,7 @@ export namespace Prisma {
     userId?: SortOrder
     user?: UsersOrderByWithRelationInput
     competitions?: CompetitionOrderByRelationAggregateInput
+    marks?: MarksOrderByRelationAggregateInput
   }
 
   export type JudgesWhereUniqueInput = Prisma.AtLeast<{
@@ -7036,6 +9696,7 @@ export namespace Prisma {
     NOT?: JudgesWhereInput | JudgesWhereInput[]
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
     competitions?: CompetitionListRelationFilter
+    marks?: MarksListRelationFilter
   }, "id" | "nationalId" | "userId">
 
   export type JudgesOrderByWithAggregationInput = {
@@ -7056,6 +9717,71 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Judges"> | string
   }
 
+  export type MarksWhereInput = {
+    AND?: MarksWhereInput | MarksWhereInput[]
+    OR?: MarksWhereInput[]
+    NOT?: MarksWhereInput | MarksWhereInput[]
+    id?: StringFilter<"Marks"> | string
+    score?: IntFilter<"Marks"> | number
+    comments?: StringFilter<"Marks"> | string
+    createdAt?: DateTimeFilter<"Marks"> | Date | string
+    judgeId?: StringFilter<"Marks"> | string
+    participantId?: StringFilter<"Marks"> | string
+    judge?: XOR<JudgesScalarRelationFilter, JudgesWhereInput>
+    participant?: XOR<ParticipantsScalarRelationFilter, ParticipantsWhereInput>
+  }
+
+  export type MarksOrderByWithRelationInput = {
+    id?: SortOrder
+    score?: SortOrder
+    comments?: SortOrder
+    createdAt?: SortOrder
+    judgeId?: SortOrder
+    participantId?: SortOrder
+    judge?: JudgesOrderByWithRelationInput
+    participant?: ParticipantsOrderByWithRelationInput
+  }
+
+  export type MarksWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MarksWhereInput | MarksWhereInput[]
+    OR?: MarksWhereInput[]
+    NOT?: MarksWhereInput | MarksWhereInput[]
+    score?: IntFilter<"Marks"> | number
+    comments?: StringFilter<"Marks"> | string
+    createdAt?: DateTimeFilter<"Marks"> | Date | string
+    judgeId?: StringFilter<"Marks"> | string
+    participantId?: StringFilter<"Marks"> | string
+    judge?: XOR<JudgesScalarRelationFilter, JudgesWhereInput>
+    participant?: XOR<ParticipantsScalarRelationFilter, ParticipantsWhereInput>
+  }, "id">
+
+  export type MarksOrderByWithAggregationInput = {
+    id?: SortOrder
+    score?: SortOrder
+    comments?: SortOrder
+    createdAt?: SortOrder
+    judgeId?: SortOrder
+    participantId?: SortOrder
+    _count?: MarksCountOrderByAggregateInput
+    _avg?: MarksAvgOrderByAggregateInput
+    _max?: MarksMaxOrderByAggregateInput
+    _min?: MarksMinOrderByAggregateInput
+    _sum?: MarksSumOrderByAggregateInput
+  }
+
+  export type MarksScalarWhereWithAggregatesInput = {
+    AND?: MarksScalarWhereWithAggregatesInput | MarksScalarWhereWithAggregatesInput[]
+    OR?: MarksScalarWhereWithAggregatesInput[]
+    NOT?: MarksScalarWhereWithAggregatesInput | MarksScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Marks"> | string
+    score?: IntWithAggregatesFilter<"Marks"> | number
+    comments?: StringWithAggregatesFilter<"Marks"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Marks"> | Date | string
+    judgeId?: StringWithAggregatesFilter<"Marks"> | string
+    participantId?: StringWithAggregatesFilter<"Marks"> | string
+  }
+
   export type SchoolWhereInput = {
     AND?: SchoolWhereInput | SchoolWhereInput[]
     OR?: SchoolWhereInput[]
@@ -7064,7 +9790,7 @@ export namespace Prisma {
     county?: StringFilter<"School"> | string
     userId?: StringFilter<"School"> | string
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
-    participant?: XOR<ParticipantsNullableScalarRelationFilter, ParticipantsWhereInput> | null
+    participant?: ParticipantsListRelationFilter
   }
 
   export type SchoolOrderByWithRelationInput = {
@@ -7072,7 +9798,7 @@ export namespace Prisma {
     county?: SortOrder
     userId?: SortOrder
     user?: UsersOrderByWithRelationInput
-    participant?: ParticipantsOrderByWithRelationInput
+    participant?: ParticipantsOrderByRelationAggregateInput
   }
 
   export type SchoolWhereUniqueInput = Prisma.AtLeast<{
@@ -7083,7 +9809,7 @@ export namespace Prisma {
     NOT?: SchoolWhereInput | SchoolWhereInput[]
     county?: StringFilter<"School"> | string
     user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
-    participant?: XOR<ParticipantsNullableScalarRelationFilter, ParticipantsWhereInput> | null
+    participant?: ParticipantsListRelationFilter
   }, "id" | "userId">
 
   export type SchoolOrderByWithAggregationInput = {
@@ -7117,6 +9843,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Users"> | Date | string
     school?: XOR<SchoolNullableScalarRelationFilter, SchoolWhereInput> | null
     judge?: XOR<JudgesNullableScalarRelationFilter, JudgesWhereInput> | null
+    verification?: XOR<VerificationsNullableScalarRelationFilter, VerificationsWhereInput> | null
   }
 
   export type UsersOrderByWithRelationInput = {
@@ -7129,6 +9856,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     school?: SchoolOrderByWithRelationInput
     judge?: JudgesOrderByWithRelationInput
+    verification?: VerificationsOrderByWithRelationInput
   }
 
   export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -7144,6 +9872,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Users"> | Date | string
     school?: XOR<SchoolNullableScalarRelationFilter, SchoolWhereInput> | null
     judge?: XOR<JudgesNullableScalarRelationFilter, JudgesWhereInput> | null
+    verification?: XOR<VerificationsNullableScalarRelationFilter, VerificationsWhereInput> | null
   }, "id" | "email">
 
   export type UsersOrderByWithAggregationInput = {
@@ -7172,43 +9901,103 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Users"> | Date | string
   }
 
+  export type VerificationsWhereInput = {
+    AND?: VerificationsWhereInput | VerificationsWhereInput[]
+    OR?: VerificationsWhereInput[]
+    NOT?: VerificationsWhereInput | VerificationsWhereInput[]
+    id?: StringFilter<"Verifications"> | string
+    code?: StringFilter<"Verifications"> | string
+    userId?: StringFilter<"Verifications"> | string
+    createdAt?: DateTimeFilter<"Verifications"> | Date | string
+    user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
+  }
+
+  export type VerificationsOrderByWithRelationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    user?: UsersOrderByWithRelationInput
+  }
+
+  export type VerificationsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: VerificationsWhereInput | VerificationsWhereInput[]
+    OR?: VerificationsWhereInput[]
+    NOT?: VerificationsWhereInput | VerificationsWhereInput[]
+    code?: StringFilter<"Verifications"> | string
+    createdAt?: DateTimeFilter<"Verifications"> | Date | string
+    user?: XOR<UsersScalarRelationFilter, UsersWhereInput>
+  }, "id" | "userId">
+
+  export type VerificationsOrderByWithAggregationInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: VerificationsCountOrderByAggregateInput
+    _max?: VerificationsMaxOrderByAggregateInput
+    _min?: VerificationsMinOrderByAggregateInput
+  }
+
+  export type VerificationsScalarWhereWithAggregatesInput = {
+    AND?: VerificationsScalarWhereWithAggregatesInput | VerificationsScalarWhereWithAggregatesInput[]
+    OR?: VerificationsScalarWhereWithAggregatesInput[]
+    NOT?: VerificationsScalarWhereWithAggregatesInput | VerificationsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Verifications"> | string
+    code?: StringWithAggregatesFilter<"Verifications"> | string
+    userId?: StringWithAggregatesFilter<"Verifications"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Verifications"> | Date | string
+  }
+
   export type ParticipantsCreateInput = {
     id?: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
     school: SchoolCreateNestedOneWithoutParticipantInput
     competition: CompetitionCreateNestedOneWithoutParticipantsInput
+    marks?: MarksCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsUncheckedCreateInput = {
     id?: string
     schoolId: string
     competitionId: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
+    marks?: MarksUncheckedCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutParticipantNestedInput
     competition?: CompetitionUpdateOneRequiredWithoutParticipantsNestedInput
+    marks?: MarksUpdateManyWithoutParticipantNestedInput
   }
 
   export type ParticipantsUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     schoolId?: StringFieldUpdateOperationsInput | string
     competitionId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks?: MarksUncheckedUpdateManyWithoutParticipantNestedInput
   }
 
   export type ParticipantsCreateManyInput = {
     id?: string
     schoolId: string
     competitionId: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
   }
 
   export type ParticipantsUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7216,6 +10005,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     schoolId?: StringFieldUpdateOperationsInput | string
     competitionId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7224,6 +10014,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     judges?: JudgesCreateNestedManyWithoutCompetitionsInput
     participants?: ParticipantsCreateNestedManyWithoutCompetitionInput
@@ -7234,6 +10027,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     judges?: JudgesUncheckedCreateNestedManyWithoutCompetitionsInput
     participants?: ParticipantsUncheckedCreateNestedManyWithoutCompetitionInput
@@ -7244,6 +10040,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     judges?: JudgesUpdateManyWithoutCompetitionsNestedInput
     participants?: ParticipantsUpdateManyWithoutCompetitionNestedInput
@@ -7254,6 +10053,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     judges?: JudgesUncheckedUpdateManyWithoutCompetitionsNestedInput
     participants?: ParticipantsUncheckedUpdateManyWithoutCompetitionNestedInput
@@ -7264,6 +10066,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
   }
 
@@ -7272,6 +10077,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
   }
 
@@ -7280,6 +10088,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
   }
 
@@ -7288,6 +10099,7 @@ export namespace Prisma {
     nationalId: string
     user: UsersCreateNestedOneWithoutJudgeInput
     competitions?: CompetitionCreateNestedManyWithoutJudgesInput
+    marks?: MarksCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesUncheckedCreateInput = {
@@ -7295,6 +10107,7 @@ export namespace Prisma {
     nationalId: string
     userId: string
     competitions?: CompetitionUncheckedCreateNestedManyWithoutJudgesInput
+    marks?: MarksUncheckedCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesUpdateInput = {
@@ -7302,6 +10115,7 @@ export namespace Prisma {
     nationalId?: StringFieldUpdateOperationsInput | string
     user?: UsersUpdateOneRequiredWithoutJudgeNestedInput
     competitions?: CompetitionUpdateManyWithoutJudgesNestedInput
+    marks?: MarksUpdateManyWithoutJudgeNestedInput
   }
 
   export type JudgesUncheckedUpdateInput = {
@@ -7309,6 +10123,7 @@ export namespace Prisma {
     nationalId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     competitions?: CompetitionUncheckedUpdateManyWithoutJudgesNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutJudgeNestedInput
   }
 
   export type JudgesCreateManyInput = {
@@ -7328,32 +10143,93 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type MarksCreateInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judge: JudgesCreateNestedOneWithoutMarksInput
+    participant: ParticipantsCreateNestedOneWithoutMarksInput
+  }
+
+  export type MarksUncheckedCreateInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judgeId: string
+    participantId: string
+  }
+
+  export type MarksUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judge?: JudgesUpdateOneRequiredWithoutMarksNestedInput
+    participant?: ParticipantsUpdateOneRequiredWithoutMarksNestedInput
+  }
+
+  export type MarksUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judgeId?: StringFieldUpdateOperationsInput | string
+    participantId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MarksCreateManyInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judgeId: string
+    participantId: string
+  }
+
+  export type MarksUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarksUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judgeId?: StringFieldUpdateOperationsInput | string
+    participantId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type SchoolCreateInput = {
     id?: string
     county: string
     user: UsersCreateNestedOneWithoutSchoolInput
-    participant?: ParticipantsCreateNestedOneWithoutSchoolInput
+    participant?: ParticipantsCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateInput = {
     id?: string
     county: string
     userId: string
-    participant?: ParticipantsUncheckedCreateNestedOneWithoutSchoolInput
+    participant?: ParticipantsUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     county?: StringFieldUpdateOperationsInput | string
     user?: UsersUpdateOneRequiredWithoutSchoolNestedInput
-    participant?: ParticipantsUpdateOneWithoutSchoolNestedInput
+    participant?: ParticipantsUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     county?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    participant?: ParticipantsUncheckedUpdateOneWithoutSchoolNestedInput
+    participant?: ParticipantsUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolCreateManyInput = {
@@ -7383,6 +10259,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     school?: SchoolCreateNestedOneWithoutUserInput
     judge?: JudgesCreateNestedOneWithoutUserInput
+    verification?: VerificationsCreateNestedOneWithoutUserInput
   }
 
   export type UsersUncheckedCreateInput = {
@@ -7395,6 +10272,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     school?: SchoolUncheckedCreateNestedOneWithoutUserInput
     judge?: JudgesUncheckedCreateNestedOneWithoutUserInput
+    verification?: VerificationsUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UsersUpdateInput = {
@@ -7407,6 +10285,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneWithoutUserNestedInput
     judge?: JudgesUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUpdateOneWithoutUserNestedInput
   }
 
   export type UsersUncheckedUpdateInput = {
@@ -7419,6 +10298,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUncheckedUpdateOneWithoutUserNestedInput
     judge?: JudgesUncheckedUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UsersCreateManyInput = {
@@ -7451,6 +10331,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type VerificationsCreateInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+    user: UsersCreateNestedOneWithoutVerificationInput
+  }
+
+  export type VerificationsUncheckedCreateInput = {
+    id?: string
+    code: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type VerificationsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UsersUpdateOneRequiredWithoutVerificationNestedInput
+  }
+
+  export type VerificationsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VerificationsCreateManyInput = {
+    id?: string
+    code: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type VerificationsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VerificationsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7464,6 +10392,13 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type EnumAPPLICATION_STATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.APPLICATION_STATUS | EnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel> | $Enums.APPLICATION_STATUS
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -7487,10 +10422,21 @@ export namespace Prisma {
     isNot?: CompetitionWhereInput
   }
 
+  export type MarksListRelationFilter = {
+    every?: MarksWhereInput
+    some?: MarksWhereInput
+    none?: MarksWhereInput
+  }
+
+  export type MarksOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ParticipantsCountOrderByAggregateInput = {
     id?: SortOrder
     schoolId?: SortOrder
     competitionId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7498,6 +10444,7 @@ export namespace Prisma {
     id?: SortOrder
     schoolId?: SortOrder
     competitionId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7505,6 +10452,7 @@ export namespace Prisma {
     id?: SortOrder
     schoolId?: SortOrder
     competitionId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7524,6 +10472,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumAPPLICATION_STATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.APPLICATION_STATUS | EnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumAPPLICATION_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.APPLICATION_STATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel>
+    _max?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -7551,6 +10509,13 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type EnumCOMPETITION_STATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.COMPETITION_STATUS | EnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel> | $Enums.COMPETITION_STATUS
+  }
+
   export type JudgesListRelationFilter = {
     every?: JudgesWhereInput
     some?: JudgesWhereInput
@@ -7576,10 +10541,14 @@ export namespace Prisma {
     name?: SortOrder
     schedule?: SortOrder
     description?: SortOrder
+    venue?: SortOrder
+    maxParticipants?: SortOrder
+    status?: SortOrder
     totalParticipants?: SortOrder
   }
 
   export type CompetitionAvgOrderByAggregateInput = {
+    maxParticipants?: SortOrder
     totalParticipants?: SortOrder
   }
 
@@ -7588,6 +10557,9 @@ export namespace Prisma {
     name?: SortOrder
     schedule?: SortOrder
     description?: SortOrder
+    venue?: SortOrder
+    maxParticipants?: SortOrder
+    status?: SortOrder
     totalParticipants?: SortOrder
   }
 
@@ -7596,10 +10568,14 @@ export namespace Prisma {
     name?: SortOrder
     schedule?: SortOrder
     description?: SortOrder
+    venue?: SortOrder
+    maxParticipants?: SortOrder
+    status?: SortOrder
     totalParticipants?: SortOrder
   }
 
   export type CompetitionSumOrderByAggregateInput = {
+    maxParticipants?: SortOrder
     totalParticipants?: SortOrder
   }
 
@@ -7617,6 +10593,16 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumCOMPETITION_STATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.COMPETITION_STATUS | EnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumCOMPETITION_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.COMPETITION_STATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel>
+    _max?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel>
   }
 
   export type UsersScalarRelationFilter = {
@@ -7652,9 +10638,49 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type ParticipantsNullableScalarRelationFilter = {
-    is?: ParticipantsWhereInput | null
-    isNot?: ParticipantsWhereInput | null
+  export type JudgesScalarRelationFilter = {
+    is?: JudgesWhereInput
+    isNot?: JudgesWhereInput
+  }
+
+  export type ParticipantsScalarRelationFilter = {
+    is?: ParticipantsWhereInput
+    isNot?: ParticipantsWhereInput
+  }
+
+  export type MarksCountOrderByAggregateInput = {
+    id?: SortOrder
+    score?: SortOrder
+    comments?: SortOrder
+    createdAt?: SortOrder
+    judgeId?: SortOrder
+    participantId?: SortOrder
+  }
+
+  export type MarksAvgOrderByAggregateInput = {
+    score?: SortOrder
+  }
+
+  export type MarksMaxOrderByAggregateInput = {
+    id?: SortOrder
+    score?: SortOrder
+    comments?: SortOrder
+    createdAt?: SortOrder
+    judgeId?: SortOrder
+    participantId?: SortOrder
+  }
+
+  export type MarksMinOrderByAggregateInput = {
+    id?: SortOrder
+    score?: SortOrder
+    comments?: SortOrder
+    createdAt?: SortOrder
+    judgeId?: SortOrder
+    participantId?: SortOrder
+  }
+
+  export type MarksSumOrderByAggregateInput = {
+    score?: SortOrder
   }
 
   export type SchoolCountOrderByAggregateInput = {
@@ -7690,6 +10716,11 @@ export namespace Prisma {
   export type JudgesNullableScalarRelationFilter = {
     is?: JudgesWhereInput | null
     isNot?: JudgesWhereInput | null
+  }
+
+  export type VerificationsNullableScalarRelationFilter = {
+    is?: VerificationsWhereInput | null
+    isNot?: VerificationsWhereInput | null
   }
 
   export type UsersCountOrderByAggregateInput = {
@@ -7732,6 +10763,27 @@ export namespace Prisma {
     _max?: NestedEnumuserRolesFilter<$PrismaModel>
   }
 
+  export type VerificationsCountOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VerificationsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VerificationsMinOrderByAggregateInput = {
+    id?: SortOrder
+    code?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type SchoolCreateNestedOneWithoutParticipantInput = {
     create?: XOR<SchoolCreateWithoutParticipantInput, SchoolUncheckedCreateWithoutParticipantInput>
     connectOrCreate?: SchoolCreateOrConnectWithoutParticipantInput
@@ -7744,8 +10796,26 @@ export namespace Prisma {
     connect?: CompetitionWhereUniqueInput
   }
 
+  export type MarksCreateNestedManyWithoutParticipantInput = {
+    create?: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput> | MarksCreateWithoutParticipantInput[] | MarksUncheckedCreateWithoutParticipantInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutParticipantInput | MarksCreateOrConnectWithoutParticipantInput[]
+    createMany?: MarksCreateManyParticipantInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+  }
+
+  export type MarksUncheckedCreateNestedManyWithoutParticipantInput = {
+    create?: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput> | MarksCreateWithoutParticipantInput[] | MarksUncheckedCreateWithoutParticipantInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutParticipantInput | MarksCreateOrConnectWithoutParticipantInput[]
+    createMany?: MarksCreateManyParticipantInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type EnumAPPLICATION_STATUSFieldUpdateOperationsInput = {
+    set?: $Enums.APPLICATION_STATUS
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -7766,6 +10836,34 @@ export namespace Prisma {
     upsert?: CompetitionUpsertWithoutParticipantsInput
     connect?: CompetitionWhereUniqueInput
     update?: XOR<XOR<CompetitionUpdateToOneWithWhereWithoutParticipantsInput, CompetitionUpdateWithoutParticipantsInput>, CompetitionUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type MarksUpdateManyWithoutParticipantNestedInput = {
+    create?: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput> | MarksCreateWithoutParticipantInput[] | MarksUncheckedCreateWithoutParticipantInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutParticipantInput | MarksCreateOrConnectWithoutParticipantInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutParticipantInput | MarksUpsertWithWhereUniqueWithoutParticipantInput[]
+    createMany?: MarksCreateManyParticipantInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutParticipantInput | MarksUpdateWithWhereUniqueWithoutParticipantInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutParticipantInput | MarksUpdateManyWithWhereWithoutParticipantInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
+  }
+
+  export type MarksUncheckedUpdateManyWithoutParticipantNestedInput = {
+    create?: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput> | MarksCreateWithoutParticipantInput[] | MarksUncheckedCreateWithoutParticipantInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutParticipantInput | MarksCreateOrConnectWithoutParticipantInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutParticipantInput | MarksUpsertWithWhereUniqueWithoutParticipantInput[]
+    createMany?: MarksCreateManyParticipantInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutParticipantInput | MarksUpdateWithWhereUniqueWithoutParticipantInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutParticipantInput | MarksUpdateManyWithWhereWithoutParticipantInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
   }
 
   export type JudgesCreateNestedManyWithoutCompetitionsInput = {
@@ -7800,6 +10898,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type EnumCOMPETITION_STATUSFieldUpdateOperationsInput = {
+    set?: $Enums.COMPETITION_STATUS
   }
 
   export type JudgesUpdateManyWithoutCompetitionsNestedInput = {
@@ -7868,10 +10970,24 @@ export namespace Prisma {
     connect?: CompetitionWhereUniqueInput | CompetitionWhereUniqueInput[]
   }
 
+  export type MarksCreateNestedManyWithoutJudgeInput = {
+    create?: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput> | MarksCreateWithoutJudgeInput[] | MarksUncheckedCreateWithoutJudgeInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutJudgeInput | MarksCreateOrConnectWithoutJudgeInput[]
+    createMany?: MarksCreateManyJudgeInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+  }
+
   export type CompetitionUncheckedCreateNestedManyWithoutJudgesInput = {
     create?: XOR<CompetitionCreateWithoutJudgesInput, CompetitionUncheckedCreateWithoutJudgesInput> | CompetitionCreateWithoutJudgesInput[] | CompetitionUncheckedCreateWithoutJudgesInput[]
     connectOrCreate?: CompetitionCreateOrConnectWithoutJudgesInput | CompetitionCreateOrConnectWithoutJudgesInput[]
     connect?: CompetitionWhereUniqueInput | CompetitionWhereUniqueInput[]
+  }
+
+  export type MarksUncheckedCreateNestedManyWithoutJudgeInput = {
+    create?: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput> | MarksCreateWithoutJudgeInput[] | MarksUncheckedCreateWithoutJudgeInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutJudgeInput | MarksCreateOrConnectWithoutJudgeInput[]
+    createMany?: MarksCreateManyJudgeInputEnvelope
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
   }
 
   export type UsersUpdateOneRequiredWithoutJudgeNestedInput = {
@@ -7895,6 +11011,20 @@ export namespace Prisma {
     deleteMany?: CompetitionScalarWhereInput | CompetitionScalarWhereInput[]
   }
 
+  export type MarksUpdateManyWithoutJudgeNestedInput = {
+    create?: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput> | MarksCreateWithoutJudgeInput[] | MarksUncheckedCreateWithoutJudgeInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutJudgeInput | MarksCreateOrConnectWithoutJudgeInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutJudgeInput | MarksUpsertWithWhereUniqueWithoutJudgeInput[]
+    createMany?: MarksCreateManyJudgeInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutJudgeInput | MarksUpdateWithWhereUniqueWithoutJudgeInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutJudgeInput | MarksUpdateManyWithWhereWithoutJudgeInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
+  }
+
   export type CompetitionUncheckedUpdateManyWithoutJudgesNestedInput = {
     create?: XOR<CompetitionCreateWithoutJudgesInput, CompetitionUncheckedCreateWithoutJudgesInput> | CompetitionCreateWithoutJudgesInput[] | CompetitionUncheckedCreateWithoutJudgesInput[]
     connectOrCreate?: CompetitionCreateOrConnectWithoutJudgesInput | CompetitionCreateOrConnectWithoutJudgesInput[]
@@ -7908,22 +11038,66 @@ export namespace Prisma {
     deleteMany?: CompetitionScalarWhereInput | CompetitionScalarWhereInput[]
   }
 
+  export type MarksUncheckedUpdateManyWithoutJudgeNestedInput = {
+    create?: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput> | MarksCreateWithoutJudgeInput[] | MarksUncheckedCreateWithoutJudgeInput[]
+    connectOrCreate?: MarksCreateOrConnectWithoutJudgeInput | MarksCreateOrConnectWithoutJudgeInput[]
+    upsert?: MarksUpsertWithWhereUniqueWithoutJudgeInput | MarksUpsertWithWhereUniqueWithoutJudgeInput[]
+    createMany?: MarksCreateManyJudgeInputEnvelope
+    set?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    disconnect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    delete?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    connect?: MarksWhereUniqueInput | MarksWhereUniqueInput[]
+    update?: MarksUpdateWithWhereUniqueWithoutJudgeInput | MarksUpdateWithWhereUniqueWithoutJudgeInput[]
+    updateMany?: MarksUpdateManyWithWhereWithoutJudgeInput | MarksUpdateManyWithWhereWithoutJudgeInput[]
+    deleteMany?: MarksScalarWhereInput | MarksScalarWhereInput[]
+  }
+
+  export type JudgesCreateNestedOneWithoutMarksInput = {
+    create?: XOR<JudgesCreateWithoutMarksInput, JudgesUncheckedCreateWithoutMarksInput>
+    connectOrCreate?: JudgesCreateOrConnectWithoutMarksInput
+    connect?: JudgesWhereUniqueInput
+  }
+
+  export type ParticipantsCreateNestedOneWithoutMarksInput = {
+    create?: XOR<ParticipantsCreateWithoutMarksInput, ParticipantsUncheckedCreateWithoutMarksInput>
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutMarksInput
+    connect?: ParticipantsWhereUniqueInput
+  }
+
+  export type JudgesUpdateOneRequiredWithoutMarksNestedInput = {
+    create?: XOR<JudgesCreateWithoutMarksInput, JudgesUncheckedCreateWithoutMarksInput>
+    connectOrCreate?: JudgesCreateOrConnectWithoutMarksInput
+    upsert?: JudgesUpsertWithoutMarksInput
+    connect?: JudgesWhereUniqueInput
+    update?: XOR<XOR<JudgesUpdateToOneWithWhereWithoutMarksInput, JudgesUpdateWithoutMarksInput>, JudgesUncheckedUpdateWithoutMarksInput>
+  }
+
+  export type ParticipantsUpdateOneRequiredWithoutMarksNestedInput = {
+    create?: XOR<ParticipantsCreateWithoutMarksInput, ParticipantsUncheckedCreateWithoutMarksInput>
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutMarksInput
+    upsert?: ParticipantsUpsertWithoutMarksInput
+    connect?: ParticipantsWhereUniqueInput
+    update?: XOR<XOR<ParticipantsUpdateToOneWithWhereWithoutMarksInput, ParticipantsUpdateWithoutMarksInput>, ParticipantsUncheckedUpdateWithoutMarksInput>
+  }
+
   export type UsersCreateNestedOneWithoutSchoolInput = {
     create?: XOR<UsersCreateWithoutSchoolInput, UsersUncheckedCreateWithoutSchoolInput>
     connectOrCreate?: UsersCreateOrConnectWithoutSchoolInput
     connect?: UsersWhereUniqueInput
   }
 
-  export type ParticipantsCreateNestedOneWithoutSchoolInput = {
-    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
-    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput
-    connect?: ParticipantsWhereUniqueInput
+  export type ParticipantsCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput> | ParticipantsCreateWithoutSchoolInput[] | ParticipantsUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput | ParticipantsCreateOrConnectWithoutSchoolInput[]
+    createMany?: ParticipantsCreateManySchoolInputEnvelope
+    connect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
   }
 
-  export type ParticipantsUncheckedCreateNestedOneWithoutSchoolInput = {
-    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
-    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput
-    connect?: ParticipantsWhereUniqueInput
+  export type ParticipantsUncheckedCreateNestedManyWithoutSchoolInput = {
+    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput> | ParticipantsCreateWithoutSchoolInput[] | ParticipantsUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput | ParticipantsCreateOrConnectWithoutSchoolInput[]
+    createMany?: ParticipantsCreateManySchoolInputEnvelope
+    connect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
   }
 
   export type UsersUpdateOneRequiredWithoutSchoolNestedInput = {
@@ -7934,24 +11108,32 @@ export namespace Prisma {
     update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutSchoolInput, UsersUpdateWithoutSchoolInput>, UsersUncheckedUpdateWithoutSchoolInput>
   }
 
-  export type ParticipantsUpdateOneWithoutSchoolNestedInput = {
-    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
-    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput
-    upsert?: ParticipantsUpsertWithoutSchoolInput
-    disconnect?: ParticipantsWhereInput | boolean
-    delete?: ParticipantsWhereInput | boolean
-    connect?: ParticipantsWhereUniqueInput
-    update?: XOR<XOR<ParticipantsUpdateToOneWithWhereWithoutSchoolInput, ParticipantsUpdateWithoutSchoolInput>, ParticipantsUncheckedUpdateWithoutSchoolInput>
+  export type ParticipantsUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput> | ParticipantsCreateWithoutSchoolInput[] | ParticipantsUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput | ParticipantsCreateOrConnectWithoutSchoolInput[]
+    upsert?: ParticipantsUpsertWithWhereUniqueWithoutSchoolInput | ParticipantsUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: ParticipantsCreateManySchoolInputEnvelope
+    set?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    disconnect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    delete?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    connect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    update?: ParticipantsUpdateWithWhereUniqueWithoutSchoolInput | ParticipantsUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: ParticipantsUpdateManyWithWhereWithoutSchoolInput | ParticipantsUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: ParticipantsScalarWhereInput | ParticipantsScalarWhereInput[]
   }
 
-  export type ParticipantsUncheckedUpdateOneWithoutSchoolNestedInput = {
-    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
-    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput
-    upsert?: ParticipantsUpsertWithoutSchoolInput
-    disconnect?: ParticipantsWhereInput | boolean
-    delete?: ParticipantsWhereInput | boolean
-    connect?: ParticipantsWhereUniqueInput
-    update?: XOR<XOR<ParticipantsUpdateToOneWithWhereWithoutSchoolInput, ParticipantsUpdateWithoutSchoolInput>, ParticipantsUncheckedUpdateWithoutSchoolInput>
+  export type ParticipantsUncheckedUpdateManyWithoutSchoolNestedInput = {
+    create?: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput> | ParticipantsCreateWithoutSchoolInput[] | ParticipantsUncheckedCreateWithoutSchoolInput[]
+    connectOrCreate?: ParticipantsCreateOrConnectWithoutSchoolInput | ParticipantsCreateOrConnectWithoutSchoolInput[]
+    upsert?: ParticipantsUpsertWithWhereUniqueWithoutSchoolInput | ParticipantsUpsertWithWhereUniqueWithoutSchoolInput[]
+    createMany?: ParticipantsCreateManySchoolInputEnvelope
+    set?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    disconnect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    delete?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    connect?: ParticipantsWhereUniqueInput | ParticipantsWhereUniqueInput[]
+    update?: ParticipantsUpdateWithWhereUniqueWithoutSchoolInput | ParticipantsUpdateWithWhereUniqueWithoutSchoolInput[]
+    updateMany?: ParticipantsUpdateManyWithWhereWithoutSchoolInput | ParticipantsUpdateManyWithWhereWithoutSchoolInput[]
+    deleteMany?: ParticipantsScalarWhereInput | ParticipantsScalarWhereInput[]
   }
 
   export type SchoolCreateNestedOneWithoutUserInput = {
@@ -7966,6 +11148,12 @@ export namespace Prisma {
     connect?: JudgesWhereUniqueInput
   }
 
+  export type VerificationsCreateNestedOneWithoutUserInput = {
+    create?: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: VerificationsCreateOrConnectWithoutUserInput
+    connect?: VerificationsWhereUniqueInput
+  }
+
   export type SchoolUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<SchoolCreateWithoutUserInput, SchoolUncheckedCreateWithoutUserInput>
     connectOrCreate?: SchoolCreateOrConnectWithoutUserInput
@@ -7976,6 +11164,12 @@ export namespace Prisma {
     create?: XOR<JudgesCreateWithoutUserInput, JudgesUncheckedCreateWithoutUserInput>
     connectOrCreate?: JudgesCreateOrConnectWithoutUserInput
     connect?: JudgesWhereUniqueInput
+  }
+
+  export type VerificationsUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: VerificationsCreateOrConnectWithoutUserInput
+    connect?: VerificationsWhereUniqueInput
   }
 
   export type EnumuserRolesFieldUpdateOperationsInput = {
@@ -8002,6 +11196,16 @@ export namespace Prisma {
     update?: XOR<XOR<JudgesUpdateToOneWithWhereWithoutUserInput, JudgesUpdateWithoutUserInput>, JudgesUncheckedUpdateWithoutUserInput>
   }
 
+  export type VerificationsUpdateOneWithoutUserNestedInput = {
+    create?: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: VerificationsCreateOrConnectWithoutUserInput
+    upsert?: VerificationsUpsertWithoutUserInput
+    disconnect?: VerificationsWhereInput | boolean
+    delete?: VerificationsWhereInput | boolean
+    connect?: VerificationsWhereUniqueInput
+    update?: XOR<XOR<VerificationsUpdateToOneWithWhereWithoutUserInput, VerificationsUpdateWithoutUserInput>, VerificationsUncheckedUpdateWithoutUserInput>
+  }
+
   export type SchoolUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<SchoolCreateWithoutUserInput, SchoolUncheckedCreateWithoutUserInput>
     connectOrCreate?: SchoolCreateOrConnectWithoutUserInput
@@ -8022,6 +11226,30 @@ export namespace Prisma {
     update?: XOR<XOR<JudgesUpdateToOneWithWhereWithoutUserInput, JudgesUpdateWithoutUserInput>, JudgesUncheckedUpdateWithoutUserInput>
   }
 
+  export type VerificationsUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
+    connectOrCreate?: VerificationsCreateOrConnectWithoutUserInput
+    upsert?: VerificationsUpsertWithoutUserInput
+    disconnect?: VerificationsWhereInput | boolean
+    delete?: VerificationsWhereInput | boolean
+    connect?: VerificationsWhereUniqueInput
+    update?: XOR<XOR<VerificationsUpdateToOneWithWhereWithoutUserInput, VerificationsUpdateWithoutUserInput>, VerificationsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UsersCreateNestedOneWithoutVerificationInput = {
+    create?: XOR<UsersCreateWithoutVerificationInput, UsersUncheckedCreateWithoutVerificationInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutVerificationInput
+    connect?: UsersWhereUniqueInput
+  }
+
+  export type UsersUpdateOneRequiredWithoutVerificationNestedInput = {
+    create?: XOR<UsersCreateWithoutVerificationInput, UsersUncheckedCreateWithoutVerificationInput>
+    connectOrCreate?: UsersCreateOrConnectWithoutVerificationInput
+    upsert?: UsersUpsertWithoutVerificationInput
+    connect?: UsersWhereUniqueInput
+    update?: XOR<XOR<UsersUpdateToOneWithWhereWithoutVerificationInput, UsersUpdateWithoutVerificationInput>, UsersUncheckedUpdateWithoutVerificationInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -8034,6 +11262,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumAPPLICATION_STATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.APPLICATION_STATUS | EnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel> | $Enums.APPLICATION_STATUS
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -8075,6 +11310,16 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumAPPLICATION_STATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.APPLICATION_STATUS | EnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.APPLICATION_STATUS[] | ListEnumAPPLICATION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumAPPLICATION_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.APPLICATION_STATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel>
+    _max?: NestedEnumAPPLICATION_STATUSFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -8087,6 +11332,13 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCOMPETITION_STATUSFilter<$PrismaModel = never> = {
+    equals?: $Enums.COMPETITION_STATUS | EnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel> | $Enums.COMPETITION_STATUS
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -8114,6 +11366,16 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedEnumCOMPETITION_STATUSWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.COMPETITION_STATUS | EnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    in?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    notIn?: $Enums.COMPETITION_STATUS[] | ListEnumCOMPETITION_STATUSFieldRefInput<$PrismaModel>
+    not?: NestedEnumCOMPETITION_STATUSWithAggregatesFilter<$PrismaModel> | $Enums.COMPETITION_STATUS
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel>
+    _max?: NestedEnumCOMPETITION_STATUSFilter<$PrismaModel>
   }
 
   export type NestedEnumuserRolesFilter<$PrismaModel = never> = {
@@ -8155,6 +11417,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     judges?: JudgesCreateNestedManyWithoutCompetitionsInput
   }
@@ -8164,6 +11429,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     judges?: JudgesUncheckedCreateNestedManyWithoutCompetitionsInput
   }
@@ -8171,6 +11439,32 @@ export namespace Prisma {
   export type CompetitionCreateOrConnectWithoutParticipantsInput = {
     where: CompetitionWhereUniqueInput
     create: XOR<CompetitionCreateWithoutParticipantsInput, CompetitionUncheckedCreateWithoutParticipantsInput>
+  }
+
+  export type MarksCreateWithoutParticipantInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judge: JudgesCreateNestedOneWithoutMarksInput
+  }
+
+  export type MarksUncheckedCreateWithoutParticipantInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judgeId: string
+  }
+
+  export type MarksCreateOrConnectWithoutParticipantInput = {
+    where: MarksWhereUniqueInput
+    create: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput>
+  }
+
+  export type MarksCreateManyParticipantInputEnvelope = {
+    data: MarksCreateManyParticipantInput | MarksCreateManyParticipantInput[]
+    skipDuplicates?: boolean
   }
 
   export type SchoolUpsertWithoutParticipantInput = {
@@ -8212,6 +11506,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     judges?: JudgesUpdateManyWithoutCompetitionsNestedInput
   }
@@ -8221,20 +11518,53 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     judges?: JudgesUncheckedUpdateManyWithoutCompetitionsNestedInput
+  }
+
+  export type MarksUpsertWithWhereUniqueWithoutParticipantInput = {
+    where: MarksWhereUniqueInput
+    update: XOR<MarksUpdateWithoutParticipantInput, MarksUncheckedUpdateWithoutParticipantInput>
+    create: XOR<MarksCreateWithoutParticipantInput, MarksUncheckedCreateWithoutParticipantInput>
+  }
+
+  export type MarksUpdateWithWhereUniqueWithoutParticipantInput = {
+    where: MarksWhereUniqueInput
+    data: XOR<MarksUpdateWithoutParticipantInput, MarksUncheckedUpdateWithoutParticipantInput>
+  }
+
+  export type MarksUpdateManyWithWhereWithoutParticipantInput = {
+    where: MarksScalarWhereInput
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyWithoutParticipantInput>
+  }
+
+  export type MarksScalarWhereInput = {
+    AND?: MarksScalarWhereInput | MarksScalarWhereInput[]
+    OR?: MarksScalarWhereInput[]
+    NOT?: MarksScalarWhereInput | MarksScalarWhereInput[]
+    id?: StringFilter<"Marks"> | string
+    score?: IntFilter<"Marks"> | number
+    comments?: StringFilter<"Marks"> | string
+    createdAt?: DateTimeFilter<"Marks"> | Date | string
+    judgeId?: StringFilter<"Marks"> | string
+    participantId?: StringFilter<"Marks"> | string
   }
 
   export type JudgesCreateWithoutCompetitionsInput = {
     id?: string
     nationalId: string
     user: UsersCreateNestedOneWithoutJudgeInput
+    marks?: MarksCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesUncheckedCreateWithoutCompetitionsInput = {
     id?: string
     nationalId: string
     userId: string
+    marks?: MarksUncheckedCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesCreateOrConnectWithoutCompetitionsInput = {
@@ -8244,14 +11574,18 @@ export namespace Prisma {
 
   export type ParticipantsCreateWithoutCompetitionInput = {
     id?: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
     school: SchoolCreateNestedOneWithoutParticipantInput
+    marks?: MarksCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsUncheckedCreateWithoutCompetitionInput = {
     id?: string
     schoolId: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
+    marks?: MarksUncheckedCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsCreateOrConnectWithoutCompetitionInput = {
@@ -8312,6 +11646,7 @@ export namespace Prisma {
     id?: StringFilter<"Participants"> | string
     schoolId?: StringFilter<"Participants"> | string
     competitionId?: StringFilter<"Participants"> | string
+    status?: EnumAPPLICATION_STATUSFilter<"Participants"> | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFilter<"Participants"> | Date | string
   }
 
@@ -8324,6 +11659,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     school?: SchoolCreateNestedOneWithoutUserInput
+    verification?: VerificationsCreateNestedOneWithoutUserInput
   }
 
   export type UsersUncheckedCreateWithoutJudgeInput = {
@@ -8335,6 +11671,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     school?: SchoolUncheckedCreateNestedOneWithoutUserInput
+    verification?: VerificationsUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UsersCreateOrConnectWithoutJudgeInput = {
@@ -8347,6 +11684,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     participants?: ParticipantsCreateNestedManyWithoutCompetitionInput
   }
@@ -8356,6 +11696,9 @@ export namespace Prisma {
     name: string
     schedule: Date | string
     description: string
+    venue: string
+    maxParticipants?: number
+    status?: $Enums.COMPETITION_STATUS
     totalParticipants?: number
     participants?: ParticipantsUncheckedCreateNestedManyWithoutCompetitionInput
   }
@@ -8363,6 +11706,32 @@ export namespace Prisma {
   export type CompetitionCreateOrConnectWithoutJudgesInput = {
     where: CompetitionWhereUniqueInput
     create: XOR<CompetitionCreateWithoutJudgesInput, CompetitionUncheckedCreateWithoutJudgesInput>
+  }
+
+  export type MarksCreateWithoutJudgeInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    participant: ParticipantsCreateNestedOneWithoutMarksInput
+  }
+
+  export type MarksUncheckedCreateWithoutJudgeInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    participantId: string
+  }
+
+  export type MarksCreateOrConnectWithoutJudgeInput = {
+    where: MarksWhereUniqueInput
+    create: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput>
+  }
+
+  export type MarksCreateManyJudgeInputEnvelope = {
+    data: MarksCreateManyJudgeInput | MarksCreateManyJudgeInput[]
+    skipDuplicates?: boolean
   }
 
   export type UsersUpsertWithoutJudgeInput = {
@@ -8385,6 +11754,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUpdateOneWithoutUserNestedInput
   }
 
   export type UsersUncheckedUpdateWithoutJudgeInput = {
@@ -8396,6 +11766,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUncheckedUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CompetitionUpsertWithWhereUniqueWithoutJudgesInput = {
@@ -8422,7 +11793,118 @@ export namespace Prisma {
     name?: StringFilter<"Competition"> | string
     schedule?: DateTimeFilter<"Competition"> | Date | string
     description?: StringFilter<"Competition"> | string
+    venue?: StringFilter<"Competition"> | string
+    maxParticipants?: IntFilter<"Competition"> | number
+    status?: EnumCOMPETITION_STATUSFilter<"Competition"> | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFilter<"Competition"> | number
+  }
+
+  export type MarksUpsertWithWhereUniqueWithoutJudgeInput = {
+    where: MarksWhereUniqueInput
+    update: XOR<MarksUpdateWithoutJudgeInput, MarksUncheckedUpdateWithoutJudgeInput>
+    create: XOR<MarksCreateWithoutJudgeInput, MarksUncheckedCreateWithoutJudgeInput>
+  }
+
+  export type MarksUpdateWithWhereUniqueWithoutJudgeInput = {
+    where: MarksWhereUniqueInput
+    data: XOR<MarksUpdateWithoutJudgeInput, MarksUncheckedUpdateWithoutJudgeInput>
+  }
+
+  export type MarksUpdateManyWithWhereWithoutJudgeInput = {
+    where: MarksScalarWhereInput
+    data: XOR<MarksUpdateManyMutationInput, MarksUncheckedUpdateManyWithoutJudgeInput>
+  }
+
+  export type JudgesCreateWithoutMarksInput = {
+    id?: string
+    nationalId: string
+    user: UsersCreateNestedOneWithoutJudgeInput
+    competitions?: CompetitionCreateNestedManyWithoutJudgesInput
+  }
+
+  export type JudgesUncheckedCreateWithoutMarksInput = {
+    id?: string
+    nationalId: string
+    userId: string
+    competitions?: CompetitionUncheckedCreateNestedManyWithoutJudgesInput
+  }
+
+  export type JudgesCreateOrConnectWithoutMarksInput = {
+    where: JudgesWhereUniqueInput
+    create: XOR<JudgesCreateWithoutMarksInput, JudgesUncheckedCreateWithoutMarksInput>
+  }
+
+  export type ParticipantsCreateWithoutMarksInput = {
+    id?: string
+    status?: $Enums.APPLICATION_STATUS
+    createdAt?: Date | string
+    school: SchoolCreateNestedOneWithoutParticipantInput
+    competition: CompetitionCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type ParticipantsUncheckedCreateWithoutMarksInput = {
+    id?: string
+    schoolId: string
+    competitionId: string
+    status?: $Enums.APPLICATION_STATUS
+    createdAt?: Date | string
+  }
+
+  export type ParticipantsCreateOrConnectWithoutMarksInput = {
+    where: ParticipantsWhereUniqueInput
+    create: XOR<ParticipantsCreateWithoutMarksInput, ParticipantsUncheckedCreateWithoutMarksInput>
+  }
+
+  export type JudgesUpsertWithoutMarksInput = {
+    update: XOR<JudgesUpdateWithoutMarksInput, JudgesUncheckedUpdateWithoutMarksInput>
+    create: XOR<JudgesCreateWithoutMarksInput, JudgesUncheckedCreateWithoutMarksInput>
+    where?: JudgesWhereInput
+  }
+
+  export type JudgesUpdateToOneWithWhereWithoutMarksInput = {
+    where?: JudgesWhereInput
+    data: XOR<JudgesUpdateWithoutMarksInput, JudgesUncheckedUpdateWithoutMarksInput>
+  }
+
+  export type JudgesUpdateWithoutMarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nationalId?: StringFieldUpdateOperationsInput | string
+    user?: UsersUpdateOneRequiredWithoutJudgeNestedInput
+    competitions?: CompetitionUpdateManyWithoutJudgesNestedInput
+  }
+
+  export type JudgesUncheckedUpdateWithoutMarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nationalId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    competitions?: CompetitionUncheckedUpdateManyWithoutJudgesNestedInput
+  }
+
+  export type ParticipantsUpsertWithoutMarksInput = {
+    update: XOR<ParticipantsUpdateWithoutMarksInput, ParticipantsUncheckedUpdateWithoutMarksInput>
+    create: XOR<ParticipantsCreateWithoutMarksInput, ParticipantsUncheckedCreateWithoutMarksInput>
+    where?: ParticipantsWhereInput
+  }
+
+  export type ParticipantsUpdateToOneWithWhereWithoutMarksInput = {
+    where?: ParticipantsWhereInput
+    data: XOR<ParticipantsUpdateWithoutMarksInput, ParticipantsUncheckedUpdateWithoutMarksInput>
+  }
+
+  export type ParticipantsUpdateWithoutMarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneRequiredWithoutParticipantNestedInput
+    competition?: CompetitionUpdateOneRequiredWithoutParticipantsNestedInput
+  }
+
+  export type ParticipantsUncheckedUpdateWithoutMarksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    schoolId?: StringFieldUpdateOperationsInput | string
+    competitionId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UsersCreateWithoutSchoolInput = {
@@ -8434,6 +11916,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     judge?: JudgesCreateNestedOneWithoutUserInput
+    verification?: VerificationsCreateNestedOneWithoutUserInput
   }
 
   export type UsersUncheckedCreateWithoutSchoolInput = {
@@ -8445,6 +11928,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     judge?: JudgesUncheckedCreateNestedOneWithoutUserInput
+    verification?: VerificationsUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UsersCreateOrConnectWithoutSchoolInput = {
@@ -8454,19 +11938,28 @@ export namespace Prisma {
 
   export type ParticipantsCreateWithoutSchoolInput = {
     id?: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
     competition: CompetitionCreateNestedOneWithoutParticipantsInput
+    marks?: MarksCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsUncheckedCreateWithoutSchoolInput = {
     id?: string
     competitionId: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
+    marks?: MarksUncheckedCreateNestedManyWithoutParticipantInput
   }
 
   export type ParticipantsCreateOrConnectWithoutSchoolInput = {
     where: ParticipantsWhereUniqueInput
     create: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
+  }
+
+  export type ParticipantsCreateManySchoolInputEnvelope = {
+    data: ParticipantsCreateManySchoolInput | ParticipantsCreateManySchoolInput[]
+    skipDuplicates?: boolean
   }
 
   export type UsersUpsertWithoutSchoolInput = {
@@ -8489,6 +11982,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     judge?: JudgesUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUpdateOneWithoutUserNestedInput
   }
 
   export type UsersUncheckedUpdateWithoutSchoolInput = {
@@ -8500,41 +11994,35 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     judge?: JudgesUncheckedUpdateOneWithoutUserNestedInput
+    verification?: VerificationsUncheckedUpdateOneWithoutUserNestedInput
   }
 
-  export type ParticipantsUpsertWithoutSchoolInput = {
+  export type ParticipantsUpsertWithWhereUniqueWithoutSchoolInput = {
+    where: ParticipantsWhereUniqueInput
     update: XOR<ParticipantsUpdateWithoutSchoolInput, ParticipantsUncheckedUpdateWithoutSchoolInput>
     create: XOR<ParticipantsCreateWithoutSchoolInput, ParticipantsUncheckedCreateWithoutSchoolInput>
-    where?: ParticipantsWhereInput
   }
 
-  export type ParticipantsUpdateToOneWithWhereWithoutSchoolInput = {
-    where?: ParticipantsWhereInput
+  export type ParticipantsUpdateWithWhereUniqueWithoutSchoolInput = {
+    where: ParticipantsWhereUniqueInput
     data: XOR<ParticipantsUpdateWithoutSchoolInput, ParticipantsUncheckedUpdateWithoutSchoolInput>
   }
 
-  export type ParticipantsUpdateWithoutSchoolInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    competition?: CompetitionUpdateOneRequiredWithoutParticipantsNestedInput
-  }
-
-  export type ParticipantsUncheckedUpdateWithoutSchoolInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competitionId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ParticipantsUpdateManyWithWhereWithoutSchoolInput = {
+    where: ParticipantsScalarWhereInput
+    data: XOR<ParticipantsUpdateManyMutationInput, ParticipantsUncheckedUpdateManyWithoutSchoolInput>
   }
 
   export type SchoolCreateWithoutUserInput = {
     id?: string
     county: string
-    participant?: ParticipantsCreateNestedOneWithoutSchoolInput
+    participant?: ParticipantsCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolUncheckedCreateWithoutUserInput = {
     id?: string
     county: string
-    participant?: ParticipantsUncheckedCreateNestedOneWithoutSchoolInput
+    participant?: ParticipantsUncheckedCreateNestedManyWithoutSchoolInput
   }
 
   export type SchoolCreateOrConnectWithoutUserInput = {
@@ -8546,17 +12034,36 @@ export namespace Prisma {
     id?: string
     nationalId: string
     competitions?: CompetitionCreateNestedManyWithoutJudgesInput
+    marks?: MarksCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesUncheckedCreateWithoutUserInput = {
     id?: string
     nationalId: string
     competitions?: CompetitionUncheckedCreateNestedManyWithoutJudgesInput
+    marks?: MarksUncheckedCreateNestedManyWithoutJudgeInput
   }
 
   export type JudgesCreateOrConnectWithoutUserInput = {
     where: JudgesWhereUniqueInput
     create: XOR<JudgesCreateWithoutUserInput, JudgesUncheckedCreateWithoutUserInput>
+  }
+
+  export type VerificationsCreateWithoutUserInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+  }
+
+  export type VerificationsUncheckedCreateWithoutUserInput = {
+    id?: string
+    code: string
+    createdAt?: Date | string
+  }
+
+  export type VerificationsCreateOrConnectWithoutUserInput = {
+    where: VerificationsWhereUniqueInput
+    create: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
   }
 
   export type SchoolUpsertWithoutUserInput = {
@@ -8573,13 +12080,13 @@ export namespace Prisma {
   export type SchoolUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     county?: StringFieldUpdateOperationsInput | string
-    participant?: ParticipantsUpdateOneWithoutSchoolNestedInput
+    participant?: ParticipantsUpdateManyWithoutSchoolNestedInput
   }
 
   export type SchoolUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     county?: StringFieldUpdateOperationsInput | string
-    participant?: ParticipantsUncheckedUpdateOneWithoutSchoolNestedInput
+    participant?: ParticipantsUncheckedUpdateManyWithoutSchoolNestedInput
   }
 
   export type JudgesUpsertWithoutUserInput = {
@@ -8597,17 +12104,139 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nationalId?: StringFieldUpdateOperationsInput | string
     competitions?: CompetitionUpdateManyWithoutJudgesNestedInput
+    marks?: MarksUpdateManyWithoutJudgeNestedInput
   }
 
   export type JudgesUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     nationalId?: StringFieldUpdateOperationsInput | string
     competitions?: CompetitionUncheckedUpdateManyWithoutJudgesNestedInput
+    marks?: MarksUncheckedUpdateManyWithoutJudgeNestedInput
+  }
+
+  export type VerificationsUpsertWithoutUserInput = {
+    update: XOR<VerificationsUpdateWithoutUserInput, VerificationsUncheckedUpdateWithoutUserInput>
+    create: XOR<VerificationsCreateWithoutUserInput, VerificationsUncheckedCreateWithoutUserInput>
+    where?: VerificationsWhereInput
+  }
+
+  export type VerificationsUpdateToOneWithWhereWithoutUserInput = {
+    where?: VerificationsWhereInput
+    data: XOR<VerificationsUpdateWithoutUserInput, VerificationsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type VerificationsUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VerificationsUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UsersCreateWithoutVerificationInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: $Enums.userRoles
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school?: SchoolCreateNestedOneWithoutUserInput
+    judge?: JudgesCreateNestedOneWithoutUserInput
+  }
+
+  export type UsersUncheckedCreateWithoutVerificationInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    role?: $Enums.userRoles
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    school?: SchoolUncheckedCreateNestedOneWithoutUserInput
+    judge?: JudgesUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UsersCreateOrConnectWithoutVerificationInput = {
+    where: UsersWhereUniqueInput
+    create: XOR<UsersCreateWithoutVerificationInput, UsersUncheckedCreateWithoutVerificationInput>
+  }
+
+  export type UsersUpsertWithoutVerificationInput = {
+    update: XOR<UsersUpdateWithoutVerificationInput, UsersUncheckedUpdateWithoutVerificationInput>
+    create: XOR<UsersCreateWithoutVerificationInput, UsersUncheckedCreateWithoutVerificationInput>
+    where?: UsersWhereInput
+  }
+
+  export type UsersUpdateToOneWithWhereWithoutVerificationInput = {
+    where?: UsersWhereInput
+    data: XOR<UsersUpdateWithoutVerificationInput, UsersUncheckedUpdateWithoutVerificationInput>
+  }
+
+  export type UsersUpdateWithoutVerificationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumuserRolesFieldUpdateOperationsInput | $Enums.userRoles
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUpdateOneWithoutUserNestedInput
+    judge?: JudgesUpdateOneWithoutUserNestedInput
+  }
+
+  export type UsersUncheckedUpdateWithoutVerificationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumuserRolesFieldUpdateOperationsInput | $Enums.userRoles
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    school?: SchoolUncheckedUpdateOneWithoutUserNestedInput
+    judge?: JudgesUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type MarksCreateManyParticipantInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    judgeId: string
+  }
+
+  export type MarksUpdateWithoutParticipantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judge?: JudgesUpdateOneRequiredWithoutMarksNestedInput
+  }
+
+  export type MarksUncheckedUpdateWithoutParticipantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judgeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MarksUncheckedUpdateManyWithoutParticipantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    judgeId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ParticipantsCreateManyCompetitionInput = {
     id?: string
     schoolId: string
+    status?: $Enums.APPLICATION_STATUS
     createdAt?: Date | string
   }
 
@@ -8615,12 +12244,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nationalId?: StringFieldUpdateOperationsInput | string
     user?: UsersUpdateOneRequiredWithoutJudgeNestedInput
+    marks?: MarksUpdateManyWithoutJudgeNestedInput
   }
 
   export type JudgesUncheckedUpdateWithoutCompetitionsInput = {
     id?: StringFieldUpdateOperationsInput | string
     nationalId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    marks?: MarksUncheckedUpdateManyWithoutJudgeNestedInput
   }
 
   export type JudgesUncheckedUpdateManyWithoutCompetitionsInput = {
@@ -8631,20 +12262,33 @@ export namespace Prisma {
 
   export type ParticipantsUpdateWithoutCompetitionInput = {
     id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     school?: SchoolUpdateOneRequiredWithoutParticipantNestedInput
+    marks?: MarksUpdateManyWithoutParticipantNestedInput
   }
 
   export type ParticipantsUncheckedUpdateWithoutCompetitionInput = {
     id?: StringFieldUpdateOperationsInput | string
     schoolId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks?: MarksUncheckedUpdateManyWithoutParticipantNestedInput
   }
 
   export type ParticipantsUncheckedUpdateManyWithoutCompetitionInput = {
     id?: StringFieldUpdateOperationsInput | string
     schoolId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarksCreateManyJudgeInput = {
+    id?: string
+    score: number
+    comments: string
+    createdAt?: Date | string
+    participantId: string
   }
 
   export type CompetitionUpdateWithoutJudgesInput = {
@@ -8652,6 +12296,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     participants?: ParticipantsUpdateManyWithoutCompetitionNestedInput
   }
@@ -8661,6 +12308,9 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
     participants?: ParticipantsUncheckedUpdateManyWithoutCompetitionNestedInput
   }
@@ -8670,7 +12320,64 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     schedule?: DateTimeFieldUpdateOperationsInput | Date | string
     description?: StringFieldUpdateOperationsInput | string
+    venue?: StringFieldUpdateOperationsInput | string
+    maxParticipants?: IntFieldUpdateOperationsInput | number
+    status?: EnumCOMPETITION_STATUSFieldUpdateOperationsInput | $Enums.COMPETITION_STATUS
     totalParticipants?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MarksUpdateWithoutJudgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participant?: ParticipantsUpdateOneRequiredWithoutMarksNestedInput
+  }
+
+  export type MarksUncheckedUpdateWithoutJudgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participantId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MarksUncheckedUpdateManyWithoutJudgeInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    score?: IntFieldUpdateOperationsInput | number
+    comments?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    participantId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ParticipantsCreateManySchoolInput = {
+    id?: string
+    competitionId: string
+    status?: $Enums.APPLICATION_STATUS
+    createdAt?: Date | string
+  }
+
+  export type ParticipantsUpdateWithoutSchoolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    competition?: CompetitionUpdateOneRequiredWithoutParticipantsNestedInput
+    marks?: MarksUpdateManyWithoutParticipantNestedInput
+  }
+
+  export type ParticipantsUncheckedUpdateWithoutSchoolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competitionId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    marks?: MarksUncheckedUpdateManyWithoutParticipantNestedInput
+  }
+
+  export type ParticipantsUncheckedUpdateManyWithoutSchoolInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competitionId?: StringFieldUpdateOperationsInput | string
+    status?: EnumAPPLICATION_STATUSFieldUpdateOperationsInput | $Enums.APPLICATION_STATUS
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

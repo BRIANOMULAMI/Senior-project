@@ -1,0 +1,9 @@
+model Verifications {
+    id        String   @id @default(cuid())
+    code      String
+    userId    String   @unique
+    createdAt DateTime @default(now())
+    user      Users    @relation(fields: [userId], references: [id])
+
+    @@map("Verifications")
+}

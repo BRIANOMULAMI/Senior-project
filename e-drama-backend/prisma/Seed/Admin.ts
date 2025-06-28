@@ -1,7 +1,7 @@
 import { PrismaClient } from "../../src/generated/prisma";
 import { hash } from "bcryptjs";
 import { SendMail } from "../../src/Mail/Sender";
-// import { Sender } from "../../src/Mail/mail";
+import { Sender } from "../../src/Mail/mail";
 
 const prisma = new PrismaClient();
 
@@ -27,19 +27,19 @@ async function main() {
     },
   });
 
-  // await SendMail({
-  //   html: `
-  //     <h2>Admin Account Created</h2>
-  //     <p><strong>Email:</strong> ${email}</p>
-  //     <p><strong>Password:</strong> ${rawPassword}</p>
-  //   `,
-  //   recepient: [
-  //     { email: "leleigideon97@gmail.com" },
-  //     { email: "brianangondi@gmail.com" },
-  //   ],
-  //   sender: Sender,
-  //   subject: "🛡️ Admin User Credentials",
-  // });
+  await SendMail({
+    html: `
+      <h2>Admin Account Created</h2>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Password:</strong> ${rawPassword}</p>
+    `,
+    recepient: [
+      { email: "leleigideon97@gmail.com" },
+      { email: "brianangondi@gmail.com" },
+    ],
+    sender: Sender,
+    subject: "🛡️ Admin User Credentials",
+  });
 
   console.log("✅ Admin seeded:", admin);
 }

@@ -1,0 +1,14 @@
+model Marks {
+    id        String   @id @default(cuid())
+    score     Int
+    comments  String
+    createdAt DateTime @default(now()) @map("created_at")
+
+    judgeId       String
+    participantId String
+
+    judge       Judges       @relation(fields: [judgeId], references: [id], onDelete: Cascade)
+    participant Participants @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+    @@map("marks")
+}

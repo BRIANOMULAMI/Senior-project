@@ -124,6 +124,7 @@ exports.Prisma.ParticipantsScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   competitionId: 'competitionId',
+  status: 'status',
   createdAt: 'createdAt'
 };
 
@@ -132,6 +133,9 @@ exports.Prisma.CompetitionScalarFieldEnum = {
   name: 'name',
   schedule: 'schedule',
   description: 'description',
+  venue: 'venue',
+  maxParticipants: 'maxParticipants',
+  status: 'status',
   totalParticipants: 'totalParticipants'
 };
 
@@ -139,6 +143,15 @@ exports.Prisma.JudgesScalarFieldEnum = {
   id: 'id',
   nationalId: 'nationalId',
   userId: 'userId'
+};
+
+exports.Prisma.MarksScalarFieldEnum = {
+  id: 'id',
+  score: 'score',
+  comments: 'comments',
+  createdAt: 'createdAt',
+  judgeId: 'judgeId',
+  participantId: 'participantId'
 };
 
 exports.Prisma.SchoolScalarFieldEnum = {
@@ -157,6 +170,13 @@ exports.Prisma.UsersScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.VerificationsScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -166,6 +186,18 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.APPLICATION_STATUS = exports.$Enums.APPLICATION_STATUS = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED'
+};
+
+exports.COMPETITION_STATUS = exports.$Enums.COMPETITION_STATUS = {
+  UPCOMING: 'UPCOMING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED'
+};
+
 exports.userRoles = exports.$Enums.userRoles = {
   ADMIN: 'ADMIN',
   JUDGE: 'JUDGE',
@@ -176,8 +208,10 @@ exports.Prisma.ModelName = {
   Participants: 'Participants',
   Competition: 'Competition',
   Judges: 'Judges',
+  Marks: 'Marks',
   School: 'School',
-  Users: 'Users'
+  Users: 'Users',
+  Verifications: 'Verifications'
 };
 
 /**

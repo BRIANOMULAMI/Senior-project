@@ -1,9 +1,20 @@
 model Competition {
-    id                String         @id @default(cuid())
+    id                String             @id @default(cuid())
     name              String
     schedule          DateTime
     description       String
-    totalParticipants Int            @default(0) @map("total_participants")
-    judges            Judges[]       @relation("CompetitionJudges")
-    participants      Participants[] // one competition can have many participant entries
+    venue             String
+    maxParticipants   Int                @default(0) @map("max_participants")
+    status            COMPETITION_STATUS @default(UPCOMING)
+    totalParticipants Int                @default(0) @map("total_participants")
+    judges            Judges[]           @relation("CompetitionJudges")
+    participants      Participants[]
+
+    @@map("competition")
+}
+
+enum COMPETITION_STATUS {
+    UPCOMING
+    ACTIVE
+    COMPLETED
 }

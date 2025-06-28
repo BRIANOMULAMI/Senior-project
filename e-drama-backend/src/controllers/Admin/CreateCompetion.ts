@@ -10,13 +10,22 @@ interface judgeDetails {
 }
 const MAX_JUDGES = 3;
 const AdminCreateCompetiton = async (req: Request, res: Response) => {
-  const { description, name, venue, judgeId, schedule } =
+  const { description, name, time, judgeId, location, maxSchools, status } =
     req.body as CreateCompetitonsPayload;
-
-  if (!name || !venue || !schedule || !description || !judgeId) {
+  if (
+    !name ||
+    !time ||
+    !location ||
+    !description ||
+    !judgeId ||
+    !status ||
+    !maxSchools
+  ) {
     res.status(400).json({ message: "Please Provide All Fields" });
     return;
   }
+
+  console.log(name, time, location, description, judgeId, status, maxSchools);
 
   let JUDGE_DETAILS: judgeDetails[] = [];
   if (judgeId.length > MAX_JUDGES) {
@@ -53,8 +62,21 @@ const AdminCreateCompetiton = async (req: Request, res: Response) => {
         existingJudge &&
         existingJudge.competitions.length >= MAX_COMPETITIONS
       ) {
+        const fullJudge = await db.judges.findFirst({
+          where: {
+            id: judge,
+          },
+          select: {
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+          },
+        });
         res.status(400).json({
-          message: `Judge ${judge} has reached the maximum number of competitions`,
+          message: `Judge ${fullJudge?.user.name} has reached the maximum number of competitions`,
         });
         return;
       }
@@ -69,7 +91,10 @@ const AdminCreateCompetiton = async (req: Request, res: Response) => {
       data: {
         description,
         name,
-        schedule: new Date(schedule),
+        venue: location,
+        schedule: new Date(time),
+        maxParticipants: parseInt(maxSchools),
+        status: status,
         judges: {
           connect: judgeId.map((id) => ({ id })),
         },
@@ -89,16 +114,16 @@ const AdminCreateCompetiton = async (req: Request, res: Response) => {
       html: allocatedCompetitionEmailHTML(
         judge?.name ?? "",
         name,
-        new Date(schedule).toLocaleDateString("en-US", {
+        new Date(time).toLocaleDateString("en-US", {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric",
         }),
-        venue
+        location
       ),
     };
-    SendMail(mailPayload);
+    await SendMail(mailPayload);
 
     res.status(200).json({
       message: "Competition created successfully",
@@ -121,10 +146,47 @@ const AdminGetAllCompetitions = async (req: Request, res: Response) => {
         description: true,
         schedule: true,
         judges: true,
+        maxParticipants: true,
+        status: true,
+        venue: true,
       },
       orderBy: [{ schedule: "asc" }],
     });
-    res.status(200).json({ data: allCompetitons });
+    res.status(200).json(allCompetitons);
+    return;
+  } catch (error) {
+    console.log({ error });
+    res.status(500).json({ message: "Internal Server Error" });
+    return;
+  }
+};
+
+const AdminGetAllCompetitionsForJudges = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const judges = await db.judges.findMany({
+      select: {
+        id: true,
+        nationalId: true,
+        user: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+        _count: {
+          select: {
+            competitions: true,
+          },
+        },
+      },
+    });
+
+    const availableJudges = judges.filter((j) => j._count.competitions < 3);
+
+    res.status(200).json(availableJudges);
     return;
   } catch (error) {
     console.log({ error });
@@ -260,14 +322,25 @@ interface AdminUpdateCompetitionBody {
   description: string;
   name: string;
   venue: string;
-  competitionId: string;
   schedule: string;
+  maxParticipants: string;
+  status: "UPCOMING" | "ACTIVE" | "COMPLETED";
 }
 const AdminUpdateCompetition = async (req: Request, res: Response) => {
-  const { description, name, venue, competitionId, schedule } =
+  const { description, name, venue, status, schedule, maxParticipants } =
     req.body as Partial<AdminUpdateCompetitionBody>;
 
-  if (!name && !venue && !schedule && !description && !competitionId) {
+  const { id } = req.params as { id: string };
+
+  if (
+    !id ||
+    (!name &&
+      !venue &&
+      !schedule &&
+      !description &&
+      !status &&
+      !maxParticipants)
+  ) {
     res.status(400).json({ message: "Please Provide All Fields" });
     return;
   }
@@ -275,7 +348,7 @@ const AdminUpdateCompetition = async (req: Request, res: Response) => {
   try {
     const competition = await db.competition.findFirst({
       where: {
-        id: competitionId,
+        id,
       },
     });
 
@@ -292,10 +365,12 @@ const AdminUpdateCompetition = async (req: Request, res: Response) => {
       const date = new Date(schedule);
       UpdateData.schedule = date;
     }
+    if (maxParticipants) UpdateData.maxParticipants = parseInt(maxParticipants);
+    if (status) UpdateData.status = status;
 
     const updatedCompetition = await db.competition.update({
       where: {
-        id: competitionId,
+        id: competition.id,
       },
       data: UpdateData,
       include: {
@@ -353,6 +428,53 @@ const AdminDeleteCompetition = async (req: Request, res: Response) => {
   }
 };
 
+const AdminGetCompetitionJudges = async (req: Request, res: Response) => {
+  const { id } = req.params as { id: string };
+
+  if (!id) {
+    res.status(400).json({ message: "A required field is missing" });
+    return;
+  }
+
+  try {
+    const competition = await db.competition.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        judges: {
+          select: {
+            id: true,
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+            _count: {
+              select: {
+                competitions: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!competition) {
+      res.status(404).json({ message: "Competition not found" });
+      return;
+    }
+
+    res.status(200).json(competition.judges);
+    return;
+  } catch (error) {
+    console.log({ error });
+    res.status(500).json({ message: "Internal server error" });
+    return;
+  }
+};
+
 export default {
   AdminCreateCompetiton,
   AdminGetAllCompetitions,
@@ -360,4 +482,6 @@ export default {
   AdminAddJudgeToCompetition,
   AdminUpdateCompetition,
   AdminDeleteCompetition,
+  AdminGetAllCompetitionsForJudges,
+  AdminGetCompetitionJudges,
 };

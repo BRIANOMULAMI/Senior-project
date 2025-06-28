@@ -1,12 +1,19 @@
 model Participants {
-    id            String @id @default(cuid())
-    schoolId      String @unique
-    competitionId String
-
-    createdAt DateTime @default(now()) @map("created_at")
+    id            String             @id @default(cuid())
+    schoolId      String
+    competitionId String             @unique
+    status        APPLICATION_STATUS @default(PENDING)
+    createdAt     DateTime           @default(now()) @map("created_at")
 
     school      School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
     competition Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+    marks       Marks[]
 
     @@map("participants")
+}
+
+enum APPLICATION_STATUS {
+    PENDING
+    APPROVED
+    DENIED
 }

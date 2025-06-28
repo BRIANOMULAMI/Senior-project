@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/create", CreateJUdges.AdminCreateJudge);
 router.get("/all", CreateJUdges.AdminGetAllJudges);
-router.put("/update/:id", CreateJUdges.AdminUpdateJudge);
+router.put("/update", CreateJUdges.AdminUpdateJudge);
 router.delete("/delete/:id", CreateJUdges.AdminDeleteJudge);
 
 export default router;
