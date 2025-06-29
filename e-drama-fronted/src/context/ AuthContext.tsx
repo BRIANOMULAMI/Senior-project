@@ -1,71 +1,44 @@
+import { createContext, useContext } from "react";
+import { UseAuthValidateToken } from "../Api/Auth";
+import { UseGetUserRole } from "../Api/User";
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-
-
-interface User {
-  isLoggedIn: boolean;
-  role: 'admin' | 'school' | 'judge' | null;
-  username?: string;
+interface UserProps {
+  name: string;
+  email: string;
+  role: "ADMIN" | "JUDGE" | "SCHOOL";
 }
 
-// Define the shape of the AuthContext value
-interface AuthContextType {
-  user: User | null;
-  login: (role: 'admin' | 'school' | 'judge', username: string) => void;
-  logout: () => void;
+interface AuthContextProps {
+  IsAuthnticated: boolean | undefined;
+  isLoading: boolean;
+  role: "ADMIN" | "JUDGE" | "SCHOOL" | undefined;
+  user: UserProps | undefined;
 }
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
- 
-  const [user, setUser] = useState<User | null>(() => {
-    try {
-      const storedUser = localStorage.getItem('eDramaUser');
-      return storedUser ? JSON.parse(storedUser) : null;
-    } catch (error) {
-      console.error("Failed to parse user from localStorage", error);
-      return null;
-    }
-  });
-
-  // Save user state to localStorage whenever it changes
-  useEffect(() => {
-    try {
-      if (user) {
-        localStorage.setItem('eDramaUser', JSON.stringify(user));
-      } else {
-        localStorage.removeItem('eDramaUser');
-      }
-    } catch (error) {
-      console.error("Failed to save user to localStorage", error);
-    }
-  }, [user]);
-
-  // Simulate user login
-  const login = (role: 'admin' | 'school' | 'judge', username: string) => {
-    setUser({ isLoggedIn: true, role, username });
-  };
-
-  // user logout
-  const logout = () => {
-    setUser(null);
-  };
-
+type AuthProviderProps = {
+  children: React.ReactNode;
+};
+export const AuthContextProvider = ({ children }: AuthProviderProps) => {
+  const { TokenError, isLoading: tokenLoading } = UseAuthValidateToken();
+  const { data, isLoading: roleLoading } = UseGetUserRole();
+  const IsAuthnticated = !TokenError || roleLoading;
+  const isLoading = tokenLoading;
+  const role = data?.role || undefined;
+  const user = data || undefined;
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ IsAuthnticated, isLoading, role, user }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-
-export const useAuth = () => {
+export const UseAuthContext = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+
+  if (!context) {
+    throw new Error("UseAppContext must be used within an AppContextProvider");
   }
   return context;
 };
-
-

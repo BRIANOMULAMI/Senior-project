@@ -233,6 +233,7 @@ const SchoolGetCompetitonResults = async (req: Request, res: Response) => {
             competition: {
               select: {
                 name: true,
+                id: true,
               },
             },
           },

@@ -35,5 +35,10 @@ router.get(
   VerifyToken,
   SchoolReports.SchoolReportStatistics
 );
+router.get(
+  "/school-competition-rankings/:id",
+  VerifyToken,
+  SchoolReports.SchoolGetCompetitionRankings
+);
 
 export default router;
